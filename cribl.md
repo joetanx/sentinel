@@ -1,3 +1,7 @@
+Ref:
+- https://docs.cribl.io/stream/usecase-azure-workspace/
+- https://docs.cribl.io/stream/destinations-sentinel/
+
 ## 1. Setup Entra Identity for Cribl
 
 ### 1.1. Create app registration
