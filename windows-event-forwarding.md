@@ -460,7 +460,7 @@ Log location: Applications and Services → Microsoft → Windows → Eventlog-F
 
 `The WS-Management service cannot find the certificate that was requested.`
 
-![image](https://github.com/user-attachments/assets/36017213-1b48-429c-bb61-d6395ec414ca)
+![image](https://github.com/user-attachments/assets/e905edfb-caf9-4efa-b7b7-6d8ae64f4154)
 
 Possible cause: There are no certificates in `Cert:\LocalMachine\My` store that are signed by the certificate thumbprint specified by `IssuerCA`.
 
@@ -468,7 +468,7 @@ Resolution: Check that the client certificate is properly configured.
 
 `Keyset does not exist`
 
-![image](https://github.com/user-attachments/assets/fd3f8afe-626a-48ac-87ba-43ecb93d5e1a)
+![image](https://github.com/user-attachments/assets/1d973662-bf1c-4902-aaf8-39f12e916513)
 
 Possible cause: A certificate signed by the certificate thumbprint specified by `IssuerCA` exists, but `NETWORK SERVICE` does not have `Read` permission on the private key
 
@@ -478,7 +478,7 @@ Resolution: Assign `Read` permission on the private key to `NETWORK SERVICE` und
 
 `The SSL certificate is signed by an unknown certificate authority.`
 
-![image](https://github.com/user-attachments/assets/1f1ce7c9-5ef4-4411-b72a-fba8aa302f9a)
+![image](https://github.com/user-attachments/assets/c8b4c7a9-879d-42dc-a629-32a53ac5e724)
 
 Possible cause: The certificate used by the collector WinRM HTTPS listener is not trusted by the forwarder
 
@@ -486,7 +486,7 @@ Resolution: Import the issuer CA into the forwarder trust stores
 
 `The SSL certificate contains a common name (CN) that does not match the hostname.`
 
-![image](https://github.com/user-attachments/assets/6a574fa4-2fe1-44f0-bd9c-6637634a5a0e)
+![image](https://github.com/user-attachments/assets/80b5cc45-4751-4e4e-bb02-29385e008662)
 
 Possible cause: The FQDN or IP is not present in the subject or subject alternative names (SANs) of the certificate used by the collector WinRM HTTPS listener
 
@@ -494,7 +494,7 @@ Resolution: Generate a collector certificate that contains the FQDN or IP in the
 
 `The WinRM client cannot process the request. The destination computer (<collector>:5986) returned an &apos;access denied&apos; error.`
 
-![image](https://github.com/user-attachments/assets/de06ee81-6764-425c-8ea1-ff7166d1bd6a)
+![image](https://github.com/user-attachments/assets/47b16a4c-4aa2-4119-be58-1e135ffec879)
 
 Possible cause: The issue CA that signed the forwarder certificate is not added in the subscriber configuration of the collector
 
@@ -502,7 +502,7 @@ Resolution: Check that the CA is properly configured under `Select Computer Grou
 
 `The client cannot connect to the destination specified in the request.`
 
-![image](https://github.com/user-attachments/assets/48f7bc63-6fb9-4145-b820-e82ea913f5ab)
+![image](https://github.com/user-attachments/assets/e5aee4da-c37b-4898-9947-21371a96edbb)
 
 Possible cause: The collector is down or the collector WinRM HTTPS listener is not configured
 
@@ -510,7 +510,7 @@ Resolution: This can usually occur when the collector is rebooting, or the colle
 
 `The WinRM client sent a request to an HTTP server and got a response saying the requested HTTP URL was not available.`
 
-![image](https://github.com/user-attachments/assets/c7def762-c08d-4770-beb8-de17e881377f)
+![image](https://github.com/user-attachments/assets/529fdf11-521e-441e-adc1-6327f3fc0390)
 
 Possible cause:
 - This error message is somewhat misleading, this doesn't mean that the collector cannot be reached (which would be the error above)
@@ -522,7 +522,7 @@ Resolution: Add `NETWORK SERVICE` to the `Event Log Readers` group on the collec
 
 `The subscription default is created, but one or more channels in the query could not be read at this time.`
 
-![image](https://github.com/user-attachments/assets/2db49036-7d75-4686-aaad-1e6d9cad7e30)
+![image](https://github.com/user-attachments/assets/619b9477-2dc8-4605-b9ca-ed7328d67bd2)
 
 Possible cause: `NETWORK SERVICE` does not have access to one or more event log sources (usually the `Security` logs) on the forwarder
 
