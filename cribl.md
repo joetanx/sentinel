@@ -192,7 +192,7 @@ Paste the pipeline
 
 A XML or JSON copy of the `EventData` can be contained in the `EventData` field by enabling step 2 or step 6 of the pipeline
 
-![image](https://github.com/user-attachments/assets/7359622e-c6f5-408f-9131-04bc9c0eb024)
+![image](https://github.com/user-attachments/assets/e58ace4e-d85c-4035-a17e-b2ae7ad3061d)
 
 The affects how Sentinel receives the event
 
@@ -216,17 +216,18 @@ While privileged service event (`4673`) has the `EventData` field as XML, and LA
 
 #### 5.2.2. Enriching wef events
 
-A Windows security event ingested directly via AMA enriches the event with `Activity` and `LogonTypeName` fields according to `EventID` and `LogonType` fields respectively
-
-This can be done in Cribl via `Lookup` function
+A Windows security event ingested directly via AMA enriches the event with `EventLevelName`, `Activity` and `LogonTypeName` fields, this can be done in Cribl via the `Lookup` function
 
 The lookup tables for:
+- Event level names is available [here](/windows_security_events.csv)
 - Event messages according to the [common security events collected by sentinel](https://learn.microsoft.com/en-us/azure/sentinel/windows-security-event-id-reference) is available [here](/windows_security_events.csv)
 - [Logon types](https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/basic-audit-logon-events) is available [here](/windows_logon_type.csv)
 
 Upload the csv to Knowledge → Lookups:
 
 ![image](https://github.com/user-attachments/assets/148b8482-0c91-41f6-b9a6-8dc15c2cd98a)
+
+![image](https://github.com/user-attachments/assets/322132e4-d589-41c5-924d-8fd6b616718b)
 
 ![image](https://github.com/user-attachments/assets/b2c08eac-eec0-4779-936b-2b3d9863b0f9)
 
@@ -240,16 +241,25 @@ Place the lookup steps before the clean up step and configure the following:
 
 |Lookup file path|Lookup fields|Output fields|
 |---|---|---|
+|`windows_event_level.csv`|Lookup Field Name in Event: `Level`<br>Corresponding Field Name in Lookup: `Level`|Output Field Name from Lookup: `EventLevelName`<br>Lookup Field Name in Event: `EventLevelName`|
 |`windows_security_events.csv`|Lookup Field Name in Event: `EventID`<br>Corresponding Field Name in Lookup: `EventID`|Output Field Name from Lookup: `Activity`<br>Lookup Field Name in Event: `Activity`|
 |`windows_logon_type.csv`|Lookup Field Name in Event: `LogonType`<br>Corresponding Field Name in Lookup: `LogonType`|Output Field Name from Lookup: `LogonTypeName`<br>Lookup Field Name in Event: `LogonTypeName`|
 
-![image](https://github.com/user-attachments/assets/cf8ee1bf-1d34-4cf5-b873-e0350d73cd15)
+![image](https://github.com/user-attachments/assets/40b7bbf5-950d-41f9-961b-b1fb1b9661d3)
 
-![image](https://github.com/user-attachments/assets/3f227ba7-74de-4c4c-b686-e6927a271f37)
+![image](https://github.com/user-attachments/assets/4c4e58c9-85ae-4c9a-9fd2-572810000c6d)
+
+![image](https://github.com/user-attachments/assets/65b0d6f4-ca1c-4dd9-8ddd-e48997dcffaa)
 
 The `Activity` and `LogonTypeName` columns in Sentinel gets populated according to the lookups:
 
 ![image](https://github.com/user-attachments/assets/40151074-64da-4d8b-97fe-b76472ccc71a)
+
+#### 5.2.3. Cleaning up some fields
+
+Edit the existing eval function to drop `ThreadID` and `ProcessID`
+
+![image](https://github.com/user-attachments/assets/f2b4b3ae-1ed1-42b6-bc58-baab629ddc3a)
 
 ## 6. Configure routes
 
