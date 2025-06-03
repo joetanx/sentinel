@@ -216,10 +216,9 @@ While privileged service event (`4673`) has the `EventData` field as XML, and LA
 
 #### 5.2.2. Enriching wef events
 
-A Windows security event ingested directly via AMA enriches the event with `EventLevelName`, `Activity` and `LogonTypeName` fields, this can be done in Cribl via the `Lookup` function
+A Windows security event ingested directly via AMA enriches the event with `Activity` and `LogonTypeName` fields, this can be done in Cribl via the `Lookup` function
 
 The lookup tables for:
-- Event level names is available [here](/windows_security_events.csv)
 - Event messages according to the [common security events collected by sentinel](https://learn.microsoft.com/en-us/azure/sentinel/windows-security-event-id-reference) is available [here](/windows_security_events.csv)
 - [Logon types](https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/basic-audit-logon-events) is available [here](/windows_logon_type.csv)
 
@@ -227,7 +226,6 @@ Upload the csv to Knowledge → Lookups:
 
 ![image](https://github.com/user-attachments/assets/148b8482-0c91-41f6-b9a6-8dc15c2cd98a)
 
-![image](https://github.com/user-attachments/assets/322132e4-d589-41c5-924d-8fd6b616718b)
 
 ![image](https://github.com/user-attachments/assets/b2c08eac-eec0-4779-936b-2b3d9863b0f9)
 
@@ -241,11 +239,8 @@ Place the lookup steps before the clean up step and configure the following:
 
 |Lookup file path|Lookup fields|Output fields|
 |---|---|---|
-|`windows_event_level.csv`|Lookup Field Name in Event: `Level`<br>Corresponding Field Name in Lookup: `Level`|Output Field Name from Lookup: `EventLevelName`<br>Lookup Field Name in Event: `EventLevelName`|
 |`windows_security_events.csv`|Lookup Field Name in Event: `EventID`<br>Corresponding Field Name in Lookup: `EventID`|Output Field Name from Lookup: `Activity`<br>Lookup Field Name in Event: `Activity`|
 |`windows_logon_type.csv`|Lookup Field Name in Event: `LogonType`<br>Corresponding Field Name in Lookup: `LogonType`|Output Field Name from Lookup: `LogonTypeName`<br>Lookup Field Name in Event: `LogonTypeName`|
-
-![image](https://github.com/user-attachments/assets/40b7bbf5-950d-41f9-961b-b1fb1b9661d3)
 
 ![image](https://github.com/user-attachments/assets/4c4e58c9-85ae-4c9a-9fd2-572810000c6d)
 
