@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/27e22ab3-3fe9-4730-96f0-a604fdc4740a)Ref:
+Ref:
 - https://docs.cribl.io/stream/usecase-azure-workspace/
 - https://docs.cribl.io/stream/destinations-sentinel/
 
