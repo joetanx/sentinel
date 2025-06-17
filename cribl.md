@@ -272,11 +272,25 @@ The `Activity` and `LogonTypeName` columns in Sentinel gets populated according 
 
 ![image](https://github.com/user-attachments/assets/40151074-64da-4d8b-97fe-b76472ccc71a)
 
-#### 5.2.3. Cleaning up some fields
+#### 5.2.3. Capture `EventID__value` field
 
-Edit the existing eval function to drop `ThreadID` and `ProcessID`
+Some events like `Windows PowerShell` has EventID field as such:
 
-![image](https://github.com/user-attachments/assets/f2b4b3ae-1ed1-42b6-bc58-baab629ddc3a)
+```xml
+<EventID Qualifiers="0">403</EventID>
+```
+
+The XML parsing places this into `EventID_Qualifiers` and `EventID__value` fields
+
+Add rename of `EventID__value` to `EventID` to send it correctly:
+
+![image](https://github.com/user-attachments/assets/97791bbf-05b5-46e6-bf48-b35401d8564b)
+
+#### 5.2.4. Drop unused `ThreadID`, `ProcessID` and `EventID_Qualifiers` fields
+
+Edit the existing eval function to drop `ThreadID`, `ProcessID` and `EventID_Qualifiers`
+
+![image](https://github.com/user-attachments/assets/b276cfe7-c580-4f46-86ee-dded61f3c068)
 
 ## 6. Configure routes
 
