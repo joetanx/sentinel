@@ -190,21 +190,9 @@ Paste the pipeline
 
 #### 5.2.1. Including `EventData` field
 
-A XML or JSON copy of the `EventData` can be contained in the `EventData` field by enabling step 2 or step 6 of the pipeline
+##### `EventData` field for AMA-ingested event
 
-![image](https://github.com/user-attachments/assets/e58ace4e-d85c-4035-a17e-b2ae7ad3061d)
-
-The affects how Sentinel receives the event
-
-XML - LAW displays the `EventData` XML as a single line string:
-
-![image](https://github.com/user-attachments/assets/3c567c7e-fbbd-42d7-b64c-0a9dc9dafbdf)
-
-JSON - LAW displays the `EventData` JSON as a JSON object:
-
-![image](https://github.com/user-attachments/assets/24061221-278b-445a-b4ba-c1270c2ba1a8)
-
-A Windows security event ingested directly via AMA conditional enriches the `EventData` field depending on the type of event
+AMA conditionally enriches the `EventData` field depending on the type of event
 
 Logon failure event (`4625`) does not have `EventData` field populated:
 
@@ -213,6 +201,40 @@ Logon failure event (`4625`) does not have `EventData` field populated:
 While privileged service event (`4673`) has the `EventData` field as XML, and LAW displays it as a multi-line XML:
 
 ![image](https://github.com/user-attachments/assets/a78b9881-f551-4068-8162-7f17d12436fa)
+
+##### Keeping `EventData` in Cribl
+
+A XML or JSON copy of the `EventData` can be contained in the `EventData` field by enabling step 2 or step 6 of the pipeline
+
+![image](https://github.com/user-attachments/assets/e58ace4e-d85c-4035-a17e-b2ae7ad3061d)
+
+The affects how Sentinel receives the event
+
+**XML**:
+
+The original JS checks for `<UserData>` and uses `<UserData>` if it exists, otherwise uses `<EventData>`
+
+```js
+_raw.indexOf("<UserData>") > -1 ?
+  _raw.substring(_raw.indexOf("<UserData>"),_raw.indexOf("</UserData>") + "</UserData>".length) :
+  _raw.substring(_raw.indexOf("<EventData>"),_raw.indexOf("</EventData>") + "</EventData>".length)
+```
+
+This sends the `EventData` XML as a single line string to Sentinel:
+
+![image](https://github.com/user-attachments/assets/3c567c7e-fbbd-42d7-b64c-0a9dc9dafbdf)
+
+To capture just `<EventData>` and format it into a multi-line XML, replace the expression to the following:
+
+```js
+_raw.substring(_raw.indexOf("<EventData>"),_raw.indexOf("</EventData>") + "</EventData>".length).replace(/Data>/g,"Data>\n")
+```
+
+**JSON**:
+
+This sends the `_raw.Event.EventData.Data` array to Sentinel:
+
+![image](https://github.com/user-attachments/assets/24061221-278b-445a-b4ba-c1270c2ba1a8)
 
 #### 5.2.2. Enriching wef events
 
