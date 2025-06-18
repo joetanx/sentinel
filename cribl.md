@@ -227,7 +227,7 @@ This sends the `EventData` XML as a single line string to Sentinel:
 To capture just `<EventData>` and format it into a multi-line XML, replace the expression to the following:
 
 ```js
-_raw.substring(_raw.indexOf("<EventData>"),_raw.indexOf("</EventData>") + "</EventData>".length).replace(/Data>/g,"Data>\n")
+_raw.indexOf("<EventData>") > -1 ? _raw.substring(_raw.indexOf("<EventData>"),_raw.indexOf("</EventData>") + "</EventData>".length).replace(/Data>/g,"Data>\n") : ''
 ```
 
 **JSON**:
