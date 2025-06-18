@@ -84,10 +84,8 @@ Exploring the DLL can be done with [Resource Hacker](https://www.angusj.com/reso
 
 ![image](https://github.com/user-attachments/assets/2d78709c-e085-45e9-aa9e-b9dbc38689f6)
 
-Another useful resource for event reference is: https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/default.aspx
-
-> [!Note]
+> [!Tip]
+> 
+> A collection of Windows event codes and message template can be found here:
 >
-> A lookup table for event IDs to event messages is tabulated [here](/sentinel_security_events.csv)
->
-> Most of the event IDs are found, but there are several that I still couldn't find them, contact me if you know what they are
+> https://github.com/joetanx/cribl/blob/main/windows_event_id.csv
