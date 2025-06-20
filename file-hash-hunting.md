@@ -629,6 +629,8 @@ MD5Matches
 | summarize arg_max(TimeGenerated, *) by Computer, CommandLine
 ```
 
+Linux:
+
 ```kql
 let dt_lookBack = 1h;
 let ioc_lookBack = 14d;
