@@ -598,7 +598,15 @@ The indicators are in the `ThreatIntelligenceIndicator` table for query and anal
 
 ## 5. Analytics rule to schedule file hash query and create incidents on matches
 
-### 5.1. Rule logic query
+### 5.1. Threat Intelligence solution from Content hub
+
+There is a `TI map File Hash to Security Event` analytics rule included with the Threat Intelligence solution from Content hub
+
+The queries and rule creation in this section is similar to this rule, adjusted to match with sysmon events
+
+![image](https://github.com/user-attachments/assets/9b1c9e3c-3cb3-459d-9542-fbc181dbf8d0)
+
+### 5.2. Rule logic query
 
 Windows:
 
@@ -657,3 +665,43 @@ MD5Matches
 | union SHA256Matches
 | summarize arg_max(TimeGenerated, *) by Computer, CommandLine
 ```
+
+|Query segment|Explanation|
+|---|---|
+|`dt_lookBack` and `ioc_lookBack`|The period for events and indicators to be included in the query|
+|`let EventFileHash = …`|The sysmon event parsing query from above assigned to `EventFileHash`|
+|`let TIFileHash = …`|Select file hash indicators and assign to `TIFileHash`|
+|`let MD5Matches = …` and<br>`let SHA256Matches = …`|Using `innerunique` table `join` to select matching MD5 and SHA256 rows and assign to `MD5Matches` and `SHA256Matches`|
+|`MD5Matches … union SHA256Matches … summarize … by Computer, CommandLine`|Concatenate results from both matches and keep only entries with unique `Computer` and `CommandLine` combinations|
+
+### 5.3. Create schedule query rule
+
+Give it a name and select the related MITRE ATT&CK tactics and techniques (e.g. `Execution`)
+
+![image](https://github.com/user-attachments/assets/05ce32e3-eb8b-4d73-9a4e-2b47183535cf)
+
+Paste in the KQL query:
+
+![image](https://github.com/user-attachments/assets/aba45cc9-5f47-4a1a-9e97-62ea226059df)
+
+Create entity mappings for to display in the incident:
+
+![image](https://github.com/user-attachments/assets/b8893fcf-072c-4dce-a360-3fe5a9a188dc)
+
+Configure the schedule, alert threshold and event grouping settings:
+
+![image](https://github.com/user-attachments/assets/045e067e-437b-4478-a2ca-34af6da5a268)
+
+Configure incident and alert grouping settings:
+
+![image](https://github.com/user-attachments/assets/df67451c-5f0e-4426-af34-6d249a47bb91)
+
+Configure automation rules:
+
+![image](https://github.com/user-attachments/assets/8d7b2415-37c3-4d75-abdb-8091d9ea34ed)
+
+Incidents created by the analytics rule:
+
+![image](https://github.com/user-attachments/assets/dcb89128-f60b-40e4-8661-5e1fb48bd082)
+
+![image](https://github.com/user-attachments/assets/23155762-cd6c-4dd1-bb02-167d8d5cbf4b)
