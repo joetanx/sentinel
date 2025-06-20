@@ -678,13 +678,25 @@ MD5Matches
 
 Give it a name and select the related MITRE ATT&CK tactics and techniques (e.g. `Execution`)
 
+> [!Note]
+>
+> Create one analytics rule each for Windows and Linux
+
 ![image](https://github.com/user-attachments/assets/05ce32e3-eb8b-4d73-9a4e-2b47183535cf)
 
 Paste in the KQL query:
 
+> [!Note]
+>
+> Paste the corresponding Windows and Linux KQL queries into their respective analytics rules
+
 ![image](https://github.com/user-attachments/assets/aba45cc9-5f47-4a1a-9e97-62ea226059df)
 
 Create entity mappings for to display in the incident:
+
+> [!Note]
+>
+> The `HostIP` field is not available for Windows sysmon events
 
 ![image](https://github.com/user-attachments/assets/b8893fcf-072c-4dce-a360-3fe5a9a188dc)
 
@@ -700,7 +712,7 @@ Configure automation rules:
 
 ![image](https://github.com/user-attachments/assets/8d7b2415-37c3-4d75-abdb-8091d9ea34ed)
 
-Incidents created by the analytics rule:
+Incidents created by the analytics rules:
 
 ![image](https://github.com/user-attachments/assets/dcb89128-f60b-40e4-8661-5e1fb48bd082)
 
