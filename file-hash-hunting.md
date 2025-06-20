@@ -501,9 +501,9 @@ SecurityEvent
 | where Channel contains "Microsoft-Windows-Sysmon" and EventData contains "Hashes"
 | extend parsed = parse_xml(EventData)
 | mv-apply Data = parsed.EventData.Data on (
-summarize
-  OriginalFileName = take_anyif(Data["#text"], Data["@Name"] == "OriginalFileName"),
-  Hashes = take_anyif(Data["#text"], Data["@Name"] == "Hashes")
+  summarize
+    OriginalFileName = take_anyif(Data["#text"], Data["@Name"] == "OriginalFileName"),
+    Hashes = take_anyif(Data["#text"], Data["@Name"] == "Hashes")
 )
 ```
 
@@ -514,9 +514,9 @@ Syslog
 | where SyslogMessage contains "Linux-Sysmon" and SyslogMessage contains "Hashes"
 | extend parsed = parse_xml(SyslogMessage)
 | mv-apply Data = parsed.Event.EventData.Data on (
-summarize
-  CommandLine = max(iif(Data["@Name"] == "CommandLine", Data["#text"], "")),
-  Hashes = max(iif(Data["@Name"] == "Hashes", Data["#text"], ""))
+  summarize
+    CommandLine = max(iif(Data["@Name"] == "CommandLine", Data["#text"], "")),
+    Hashes = max(iif(Data["@Name"] == "Hashes", Data["#text"], ""))
 )
 ```
 
@@ -531,13 +531,12 @@ SecurityEvent
 | where Channel contains "Microsoft-Windows-Sysmon" and EventData contains "Hashes"
 | extend parsed = parse_xml(EventData)
 | mv-apply Data = parsed.EventData.Data on (
-summarize
-  OriginalFileName = max(iif(Data["@Name"] == "OriginalFileName", Data["#text"], "")),
-  Hashes = max(iif(Data["@Name"] == "Hashes", Data["#text"], ""))
-)
-| extend 
-  MD5 = extract(@"MD5=([A-Fa-f0-9]{32})", 1, Hashes),
-  SHA256 = extract(@"SHA256=([A-Fa-f0-9]{64})", 1, Hashes)
+  summarize
+    OriginalFileName = take_anyif(Data["#text"], Data["@Name"] == "OriginalFileName"),
+    Hashes = take_anyif(Data["#text"], Data["@Name"] == "Hashes")
+) | extend
+  MD5 = toupper(extract(@"MD5=([A-Fa-f0-9]{32})", 1, tostring(Hashes))),
+  SHA256 = toupper(extract(@"SHA256=([A-Fa-f0-9]{64})", 1, tostring(Hashes)))
 ```
 
 ![image](https://github.com/user-attachments/assets/3f0caf33-8814-4b6c-a285-33d3d7406922)
@@ -549,13 +548,12 @@ Syslog
 | where SyslogMessage contains "Linux-Sysmon" and SyslogMessage contains "Hashes"
 | extend parsed = parse_xml(SyslogMessage)
 | mv-apply Data = parsed.Event.EventData.Data on (
-summarize
-  CommandLine = max(iif(Data["@Name"] == "CommandLine", Data["#text"], "")),
-  Hashes = max(iif(Data["@Name"] == "Hashes", Data["#text"], ""))
-)
-| extend 
-  MD5 = extract(@"MD5=([A-Fa-f0-9]{32})", 1, Hashes),
-  SHA256 = extract(@"SHA256=([A-Fa-f0-9]{64})", 1, Hashes)
+  summarize
+    CommandLine = max(iif(Data["@Name"] == "CommandLine", Data["#text"], "")),
+    Hashes = max(iif(Data["@Name"] == "Hashes", Data["#text"], ""))
+) | extend
+  MD5 = toupper(extract(@"MD5=([A-Fa-f0-9]{32})", 1, tostring(Hashes))),
+  SHA256 = toupper(extract(@"SHA256=([A-Fa-f0-9]{64})", 1, tostring(Hashes)))
 ```
 
 ![image](https://github.com/user-attachments/assets/797d654b-de2b-4131-b4fb-9ab4e88c503c)
@@ -576,11 +574,11 @@ A sample of test file hashes upload is also available [here](/indicators-test-ha
 >
 > **DELETE** the first row to import the file; otherwise, the file import fails
 
-![image](https://github.com/user-attachments/assets/ccf945a3-f602-480c-80a6-04d316fb2a88)
+![image](https://github.com/user-attachments/assets/b885a8c5-dd5d-4213-977b-c2c693d2eccd)
 
 Review `File import history` to check the status of the file import:
 
-![image](https://github.com/user-attachments/assets/b67872b6-fcc4-4ffd-81ea-2cb0025c0bfe)
+![image](https://github.com/user-attachments/assets/e702166b-ed2b-402a-a7db-dfabb2a20c31)
 
 > [!Tip]
 >
@@ -597,3 +595,63 @@ Refresh to see the indicators:
 The indicators are in the `ThreatIntelligenceIndicator` table for query and analytics rule usage:
 
 ![image](https://github.com/user-attachments/assets/b27745ef-cc47-43f7-8518-fa30cd2c55ee)
+
+## 5. Analytics rule to schedule file hash query and create incidents on matches
+
+### 5.1. Rule logic query
+
+Windows:
+
+```kql
+let dt_lookBack = 1h;
+let ioc_lookBack = 14d;
+let EventFileHash = SecurityEvent
+| where TimeGenerated >= ago(dt_lookBack) and Channel contains "Microsoft-Windows-Sysmon" and EventData contains "Hashes"
+| extend parsed = parse_xml(EventData)
+| mv-apply Data = parsed.EventData.Data on (
+  summarize
+    OriginalFileName = max(iif(Data["@Name"] == "OriginalFileName", Data["#text"], "")),
+    Hashes = max(iif(Data["@Name"] == "Hashes", Data["#text"], ""))
+) | extend
+  MD5 = toupper(extract(@"MD5=([A-Fa-f0-9]{32})", 1, tostring(Hashes))),
+  SHA256 = toupper(extract(@"SHA256=([A-Fa-f0-9]{64})", 1, tostring(Hashes)));
+let TIFileHash = ThreatIntelligenceIndicator
+| where isnotempty(FileHashValue) and TimeGenerated >= ago(ioc_lookBack)
+| extend FileHashValue = toupper(FileHashValue);
+let MD5Matches = EventFileHash
+| join kind=innerunique (TIFileHash | where FileHashType == "MD5")
+on $left.MD5 == $right.FileHashValue;
+let SHA256Matches = EventFileHash
+| join kind=innerunique (TIFileHash | where FileHashType == "SHA256")
+on $left.SHA256 == $right.FileHashValue;
+MD5Matches
+| union SHA256Matches
+| summarize arg_max(TimeGenerated, *) by Computer, CommandLine
+```
+
+```kql
+let dt_lookBack = 1h;
+let ioc_lookBack = 14d;
+let EventFileHash = Syslog
+| where TimeGenerated >= ago(dt_lookBack) and SyslogMessage contains "Linux-Sysmon" and SyslogMessage contains "Hashes"
+| extend parsed = parse_xml(SyslogMessage)
+| mv-apply Data = parsed.Event.EventData.Data on (
+  summarize
+    CommandLine = max(iif(Data["@Name"] == "CommandLine", Data["#text"], "")),
+    Hashes = max(iif(Data["@Name"] == "Hashes", Data["#text"], ""))
+) | extend
+  MD5 = toupper(extract(@"MD5=([A-Fa-f0-9]{32})", 1, tostring(Hashes))),
+  SHA256 = toupper(extract(@"SHA256=([A-Fa-f0-9]{64})", 1, tostring(Hashes)));
+let TIFileHash = ThreatIntelligenceIndicator
+| where isnotempty(FileHashValue) and TimeGenerated >= ago(ioc_lookBack)
+| extend FileHashValue = toupper(FileHashValue);
+let MD5Matches = EventFileHash
+| join kind=innerunique (TIFileHash | where FileHashType == "MD5")
+on $left.MD5 == $right.FileHashValue;
+let SHA256Matches = EventFileHash
+| join kind=innerunique (TIFileHash | where FileHashType == "SHA256")
+on $left.SHA256 == $right.FileHashValue;
+MD5Matches
+| union SHA256Matches
+| summarize arg_max(TimeGenerated, *) by Computer, CommandLine
+```
