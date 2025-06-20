@@ -140,7 +140,7 @@ This can be confirmed with `sysmon -s` and check the schema for events that has 
 </Details>
 
 <Details><Summary>Linux - received in <code>SyslogMessage</code> field:</Summary>
-	
+
 ```xml
 <Event>
   <System>
@@ -568,7 +568,7 @@ Sentinel supports [bulk import](https://learn.microsoft.com/en-us/azure/sentinel
 
 A template `File Indicators import template_CSV.csv` can be downloaded from the import pane
 
-A sample of test file hashes upload is also available [here](/test-hash.csv)
+A sample of test file hashes upload is also available [here](/indicators-test-hashes.csv)
 
 > [!Tip]
 >
