@@ -559,3 +559,41 @@ summarize
 ```
 
 ![image](https://github.com/user-attachments/assets/797d654b-de2b-4131-b4fb-9ab4e88c503c)
+
+## 4. Import file hash indicators
+
+Sentinel supports [bulk import](https://learn.microsoft.com/en-us/azure/sentinel/indicators-bulk-file-import) of indicators via CSV or JSON file
+
+![image](https://github.com/user-attachments/assets/60517bb5-581f-430e-890d-cc7686b4b1c8)
+
+A template `File Indicators import template_CSV.csv` can be downloaded from the import pane
+
+A sample of test file hashes upload is also available [here](/test-hash.csv)
+
+> [!Tip]
+>
+> Expand and read the usage instructions provided in the first row `EXPAND THIS CELL`
+>
+> **DELETE** the first row to import the file; otherwise, the file import fails
+
+![image](https://github.com/user-attachments/assets/ccf945a3-f602-480c-80a6-04d316fb2a88)
+
+Review `File import history` to check the status of the file import:
+
+![image](https://github.com/user-attachments/assets/b67872b6-fcc4-4ffd-81ea-2cb0025c0bfe)
+
+> [!Tip]
+>
+> File import fails as shown in the second record if the `EXPAND THIS CELL` row in the template is not deleted
+
+Refresh to see the indicators:
+
+![image](https://github.com/user-attachments/assets/04705c12-869b-4a4c-a890-6557575b6bea)
+
+> [!Note]
+>
+> The import can take from 1-2 mins to several minutes to appear, even when the file import history says "Fully imported"
+
+The indicators are in the `ThreatIntelligenceIndicator` table for query and analytics rule usage:
+
+![image](https://github.com/user-attachments/assets/b27745ef-cc47-43f7-8518-fa30cd2c55ee)
