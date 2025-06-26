@@ -16,7 +16,7 @@ DCR Resource ID:
 
 ![image](https://github.com/user-attachments/assets/e536484c-0cdc-40a6-9022-890f9e080c87)
 
-Target LAW (Log Analytics Workspace) Resource ID
+Target LAW (Log Analytics Workspace) Resource ID:
 
 ![image](https://github.com/user-attachments/assets/bdf59b1a-c6a5-4b38-ae2b-78d3c9ba8505)
 
@@ -225,7 +225,7 @@ The URI consists of:
 |Data collection rule ID|DCR Immutable ID:<br>![image](https://github.com/user-attachments/assets/15330cbf-1fee-4dc2-b784-6bc9aed11826)|
 |Stream name|The `streamDeclarations` defined in the DCR:<br>![image](https://github.com/user-attachments/assets/1378d8a2-b775-41c4-bd9c-9ad162fb2745)|
 
-A query in Azure Resource Graph Explorer can retrieve the required information:
+An Azure Resource Graph Explorer query can retrieve the required information:
 
 ```kql
 Resources
