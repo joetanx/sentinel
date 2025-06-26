@@ -204,7 +204,7 @@ Select the demo application:
 
 ![image](https://github.com/user-attachments/assets/b9e43b28-43c8-452f-a5af-c717662fcada)
 
-## 2.4. Retrieve the log ingestion API URI
+## 2.4. Retrieve the logs ingestion API URI
 
 Ref: https://learn.microsoft.com/en-us/azure/azure-monitor/logs/logs-ingestion-api-overview#uri
 
