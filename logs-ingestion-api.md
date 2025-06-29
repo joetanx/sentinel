@@ -239,3 +239,91 @@ Resources
 ```
 
 ![image](https://github.com/user-attachments/assets/e60f2923-c618-4f92-ab36-2960595416f8)
+
+## 3. Logs ingestion API
+
+### 3.1. API Authentication - client credential flow example using PowerShell
+
+> [!Tip]
+>
+> The demo application can be authenticated via either client credential or authorization code flow by following section 2. and 3. of [OAuth 2.0 with Entra identity](https://github.com/joetanx/mslab/blob/main/oauth-2.0-flows.md)
+
+The `scope` required for logs ingestion is `https://monitor.azure.com/.default`
+
+Prepare authentication parameters:
+
+```pwsh
+$tenant = '<tenant-id>'
+$clientid = '<client-id>'
+$clientsecret = '<client-secret>'
+$token_endpoint = "https://login.microsoftonline.com/$tenant/oauth2/v2.0/token"
+$body=@{
+  client_id = $clientid
+  client_secret = $clientsecret
+  grant_type = 'client_credentials'
+  scope = 'https://monitor.azure.com/.default'
+}
+```
+
+Request for access token:
+
+> [!Tip]
+>
+> The `Tee-Object` command in PowerShell works similar to `tee` in Linux
+>
+> it sends the output of the previous command to both the console and the specified variable
+
+```pwsh
+Invoke-RestMethod $token_endpoint -Method Post -Body $body | Tee-Object -Variable token
+```
+
+Example output:
+
+```pwsh
+token_type expires_in ext_expires_in access_token
+---------- ---------- -------------- ------------
+Bearer           3599           3599 <access-token-jwt>
+```
+
+The logs ingestion API expect access token in the `Authorization` header in the format of: `Bearer: <access-token-jwt>`
+
+Prepare the request header:
+
+```pwsh
+$headers = @{
+  Authorization='Bearer '+$token.access_token
+}
+```
+
+### 3.2. Data preparation
+
+The logs ingestion API expects the data to be in JSON; specifically, it should be an array of events:
+
+```json
+[
+  {
+    "alpha": "valueA1",
+    "bravo": "valueB1",
+    "charlie": "valueC1"
+  },
+  {
+    "alpha": "valueA2",
+    "bravo": "valueB2",
+    "charlie": "valueC2"
+  },
+  {
+    "alpha": "valueA3",
+    "bravo": "valueB3",
+    "charlie": "valueC3"
+  },
+]
+```
+
+#### 3.2.1. Syslog
+
+
+
+
+#### 3.2.2. Windows event
+
+
