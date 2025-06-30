@@ -295,7 +295,7 @@ $headers = @{
 }
 ```
 
-### 3.2. Data preparation
+### 3.2. Data preparation using PowerShell
 
 The logs ingestion API expects the data to be in JSON; specifically, it should be an array of events:
 
@@ -319,11 +319,278 @@ The logs ingestion API expects the data to be in JSON; specifically, it should b
 ]
 ```
 
-#### 3.2.1. Syslog
+The `@[]` and `@{}` notations can be used to create the data object in PowerShell
 
+The data above can be created as an array of objects and using `ConvertTo-Json` to format it as JSON string:
 
+```pwsh
+$body = @(
+  @{
+    alpha='valueA1'
+    bravo='valueB1'
+    charlie='valueC1'
+  }
+  @{
+    alpha='valueA2'
+    bravo='valueB2'
+    charlie='valueC2'
+  }
+  @{
+    alpha='valueA3'
+    bravo='valueB3'
+    charlie='valueC3'
+  }
+) | ConvertTo-Json
+```
 
+Read more on [data structure in PowerShell](https://github.com/joetanx/setup/blob/main/web-request-notes.md#33-data-structure-in-powershell)
 
-#### 3.2.2. Windows event
+> [!Tip]
+>
+> If the array consists of a single row, PowerShell ignores the array and represents it as an object itself instead of an array of a single object
+>
+> An array of object … :
+> 
+> ```json
+> [
+>   {
+>     <object>
+>   }
+> ]
+> ```
+>
+> … and an object … :
+> 
+> ```json
+> {
+>   <object>
+> }
+> ```
+>
+> … are not the same
+>
+> When creating event data of a single row, add the below to add the `[]` brackets to make it an array:
+>
+> ```pwsh
+> $body = "[
+>   $body
+> ]"
+> ```
 
+#### 3.2.1. Syslog example
 
+```pwsh
+$body = @(
+  @{
+    Computer='gitlab'
+    EventTime='2025-06-29T23:50:06.5492801Z'
+    Facility='auth'
+    HostIP='192.168.17.21'
+    HostName='gitlab'
+    ProcessID=4594
+    ProcessName='sshd'
+    SeverityLevel='info'
+    SyslogMessage='Invalid user doesnotexist from 192.168.17.20 port 57933'
+    SourceSystem='LogsIngestionAPI'
+  }
+  @{
+    Computer='gitlab'
+    EventTime='2025-06-29T23:50:06.5740975Z'
+    Facility='authpriv'
+    HostIP='192.168.17.21'
+    HostName='gitlab'
+    ProcessID=4594
+    ProcessName='sshd'
+    SeverityLevel='notice'
+    SyslogMessage='pam_unix(sshd:auth): check pass; user unknown'
+    SourceSystem='LogsIngestionAPI'
+  }
+  @{
+    Computer='gitlab'
+    EventTime='2025-06-29T23:50:06.5740975Z'
+    Facility='auth'
+    HostIP='192.168.17.21'
+    HostName='gitlab'
+    ProcessID=4594
+    ProcessName='sshd'
+    SeverityLevel='notice'
+    SyslogMessage='pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=192.168.17.20 '
+    SourceSystem='LogsIngestionAPI'
+  }
+  @{
+    Computer='gitlab'
+    EventTime='2025-06-29T23:50:06.5740975Z'
+    Facility='auth'
+    HostIP='192.168.17.21'
+    HostName='gitlab'
+    ProcessID=4594
+    ProcessName='sshd'
+    SeverityLevel='info'
+    SyslogMessage='Failed password for invalid user doesnotexist from 192.168.17.20 port 57933 ssh2'
+    SourceSystem='LogsIngestionAPI'
+  }
+) | ConvertTo-Json
+```
+
+> [!Tip]
+> 
+> Syslog events have a table-like structure as the keys are uniform, it can also be represented as a table:
+> 
+> | SeverityLevel | ProcessID | HostName | EventTime                    | ProcessName | Computer | SyslogMessage                                                                                          | Facility | HostIP        | SourceSystem     |
+> |---------------|-----------|----------|------------------------------|-------------|----------|--------------------------------------------------------------------------------------------------------|----------|---------------|------------------|
+> | info          | 4594      | gitlab   | 2025-06-29T23:50:06.5492801Z | sshd        | gitlab   | Invalid user doesnotexist from 192.168.17.20 port 57933                                                | auth     | 192.168.17.21 | LogsIngestionAPI |
+> | notice        | 4594      | gitlab   | 2025-06-29T23:50:06.5740975Z | sshd        | gitlab   | pam_unix(sshd:auth): check pass; user unknown                                                          | authpriv | 192.168.17.21 | LogsIngestionAPI |
+> | notice        | 4594      | gitlab   | 2025-06-29T23:50:06.5740975Z | sshd        | gitlab   | pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=192.168.17.20  | auth     | 192.168.17.21 | LogsIngestionAPI |
+> | info          | 4594      | gitlab   | 2025-06-29T23:50:06.5740975Z | sshd        | gitlab   | Failed password for invalid user doesnotexist from 192.168.17.20 port 57933 ssh2                       | auth     | 192.168.17.21 | LogsIngestionAPI |
+> 
+> If the data is available in CSV, `ConvertFrom-Csv` or `Import-Csv` can also be used to quickly import it
+> 
+> Read more on [representing uniform data in PowerShell](https://github.com/joetanx/setup/blob/main/web-request-notes.md#31-uniform-data)
+
+#### 3.2.2. Windows event example
+
+```pwsh
+$body = @(
+  @{
+    EventData="<EventData>
+<Data Name='SubjectUserSid'>S-1-5-18</Data>
+<Data Name='SubjectUserName'>DC$</Data>
+<Data Name='SubjectDomainName'>LAB</Data>
+<Data Name='SubjectLogonId'>0x3e7</Data>
+<Data Name='TargetUserSid'>S-1-0-0</Data>
+<Data Name='TargetUserName'>doesnotexist</Data>
+<Data Name='TargetDomainName'>LAB</Data>
+<Data Name='Status'>0xc000006d</Data>
+<Data Name='FailureReason'>%%2313</Data>
+<Data Name='SubStatus'>0xc0000064</Data>
+<Data Name='LogonType'>10</Data>
+<Data Name='LogonProcessName'>User32 </Data>
+<Data Name='AuthenticationPackageName'>Negotiate</Data>
+<Data Name='WorkstationName'>DC</Data>
+<Data Name='TransmittedServices'>-</Data>
+<Data Name='LmPackageName'>-</Data>
+<Data Name='KeyLength'>0</Data>
+<Data Name='ProcessId'>0xc80</Data>
+<Data Name='ProcessName'>C:\Windows\System32\svchost.exe</Data>
+<Data Name='IpAddress'>0.0.0.0</Data>
+<Data Name='IpPort'>0</Data>
+</EventData>
+"
+    EventID=4625
+    Version=0
+    Level=0
+    EventLevelName='LogAlways'
+    Task=12544
+    Opcode='0'
+    Keywords='0x8010000000000000'
+    Channel='Security'
+    EventSourceName='Microsoft-Windows-Security-Auditing'
+    Computer='DC.lab.vx'
+    Activity='4625 - An account failed to log on.'
+    SubjectUserSid='S-1-5-18'
+    SubjectUserName='DC$'
+    SubjectDomainName='LAB'
+    SubjectLogonId='0x3e7'
+    TargetUserSid='S-1-0-0'
+    TargetUserName='doesnotexist'
+    TargetDomainName='LAB'
+    Status='0xc000006d'
+    FailureReason='%%2313'
+    SubStatus='0xc0000064'
+    LogonType=10
+    LogonTypeName='RemoteInteractive'
+    LogonProcessName='User32 '
+    AuthenticationPackageName='Negotiate'
+    WorkstationName='DC'
+    KeyLength=0
+    ProcessId='0xc80'
+    ProcessName='C:\Windows\System32\svchost.exe'
+    IpAddress='0.0.0.0'
+    IpPort=0
+    EventRecordId='818'
+    SystemThreadId=5980
+    SystemProcessId=844
+    SourceSystem='LogsIngestionAPI'
+  }
+  @{
+    EventData="<EventData>
+<Data Name='SubjectUserSid'>S-1-5-18</Data>
+<Data Name='SubjectUserName'>DC$</Data>
+<Data Name='SubjectDomainName'>LAB</Data>
+<Data Name='SubjectLogonId'>0x3e7</Data>
+<Data Name='NewProcessId'>0x1efc</Data>
+<Data Name='NewProcessName'>C:\Windows\System32\svchost.exe</Data>
+<Data Name='TokenElevationType'>%%1936</Data>
+<Data Name='ProcessId'>0x344</Data>
+<Data Name='CommandLine'>C:\Windows\System32\svchost.exe -k netsvcs -p -s NetSetupSvc</Data>
+<Data Name='TargetUserSid'>S-1-0-0</Data>
+<Data Name='TargetUserName'>-</Data>
+<Data Name='TargetDomainName'>-</Data>
+<Data Name='TargetLogonId'>0x0</Data>
+<Data Name='ParentProcessName'>C:\Windows\System32\services.exe</Data>
+<Data Name='MandatoryLabel'>S-1-16-16384</Data>
+</EventData>
+"
+    EventID=4688
+    Version=2
+    Level=0
+    EventLevelName='LogAlways'
+    Task=13312
+    Opcode='0'
+    Keywords='0x8020000000000000'
+    Channel='Security'
+    EventSourceName='Microsoft-Windows-Security-Auditing'
+    Computer='DC.lab.vx'
+    Activity='4688 - A new process has been created.'
+    SubjectUserSid='S-1-5-18'
+    SubjectUserName='DC$'
+    SubjectDomainName='LAB'
+    SubjectLogonId='0x3e7'
+    TargetUserSid='S-1-0-0'
+    NewProcessId='0x1efc'
+    NewProcessName='C:\Windows\System32\svchost.exe'
+    TokenElevationType='%%1936'
+    ProcessId='0x344'
+    CommandLine='C:\Windows\System32\svchost.exe -k netsvcs -p -s NetSetupSvc'
+    ParentProcessName='C:\Windows\System32\services.exe'
+    MandatoryLabel='S-1-16-16384'
+    EventRecordId='833'
+    SystemThreadId=144
+    SystemProcessId=4
+    SourceSystem='LogsIngestionAPI'
+  }
+) | ConvertTo-Json
+```
+
+> [!Note]
+>
+> Unlike syslog, Windows events are non-uniform data, which may not be interpreted well when working with CSV
+> 
+> Read more on [representing non-uniform data in PowerShell](https://github.com/joetanx/setup/blob/main/web-request-notes.md#32-non-uniform-data)
+
+### 3.3. Send the prepared data to logs ingestion API
+
+Prepare the logs ingestion API URI:
+
+```pwsh
+$dce = 'https://<endpoint>.<region>.ingest.monitor.azure.com'
+$dcr = '<dcr-immutable-id>'
+$stream = 'Custom-SecurityEvent' #or 'Custom-Syslog'
+$endpointuri = "$dce/dataCollectionRules/$dcr/streams/$stream`?api-version=2023-01-01"
+```
+
+Send the data:
+
+```pwsh
+Invoke-RestMethod $endpointuri -Method Post -Headers $headers -Body $body -ContentType 'application/json'
+```
+
+### 3.4. Example of ingested data
+
+Syslog:
+
+![image](https://github.com/user-attachments/assets/7d36be48-70a9-4e64-bb06-ae59140042d3)
+
+Windows event:
+
+![image](https://github.com/user-attachments/assets/7ae89bbf-65d2-4647-9fc1-873d53c09e04)
