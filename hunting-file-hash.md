@@ -634,7 +634,7 @@ let SHA256Matches = EventFileHash
 on $left.SHA256 == $right.FileHashValue;
 MD5Matches
 | union SHA256Matches
-| summarize arg_max(TimeGenerated, *) by Computer, CommandLine
+| summarize arg_max(TimeGenerated, *) by Computer, OriginalFileName
 ```
 
 Linux:
