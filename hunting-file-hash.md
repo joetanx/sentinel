@@ -624,8 +624,9 @@ let EventFileHash = SecurityEvent
   MD5 = toupper(extract(@"MD5=([A-Fa-f0-9]{32})", 1, tostring(Hashes))),
   SHA256 = toupper(extract(@"SHA256=([A-Fa-f0-9]{64})", 1, tostring(Hashes)));
 let TIFileHash = ThreatIntelligenceIndicator
-| where isnotempty(FileHashValue) and TimeGenerated >= ago(ioc_lookBack)
-| extend FileHashValue = toupper(FileHashValue);
+| where isnotempty(FileHashValue) and TimeGenerated >= ago(ioc_lookBack) and Active == true and ExpirationDateTime > now()
+| extend FileHashValue = toupper(FileHashValue)
+| summarize LatestIndicatorTime = arg_max(TimeGenerated, *) by IndicatorId;
 let MD5Matches = EventFileHash
 | join kind=inner (TIFileHash | where FileHashType == "MD5")
 on $left.MD5 == $right.FileHashValue;
@@ -653,8 +654,9 @@ let EventFileHash = Syslog
   MD5 = toupper(extract(@"MD5=([A-Fa-f0-9]{32})", 1, tostring(Hashes))),
   SHA256 = toupper(extract(@"SHA256=([A-Fa-f0-9]{64})", 1, tostring(Hashes)));
 let TIFileHash = ThreatIntelligenceIndicator
-| where isnotempty(FileHashValue) and TimeGenerated >= ago(ioc_lookBack)
-| extend FileHashValue = toupper(FileHashValue);
+| where isnotempty(FileHashValue) and TimeGenerated >= ago(ioc_lookBack) and Active == true and ExpirationDateTime > now()
+| extend FileHashValue = toupper(FileHashValue)
+| summarize LatestIndicatorTime = arg_max(TimeGenerated, *) by IndicatorId;
 let MD5Matches = EventFileHash
 | join kind=inner (TIFileHash | where FileHashType == "MD5")
 on $left.MD5 == $right.FileHashValue;
