@@ -627,14 +627,14 @@ let TIFileHash = ThreatIntelligenceIndicator
 | where isnotempty(FileHashValue) and TimeGenerated >= ago(ioc_lookBack)
 | extend FileHashValue = toupper(FileHashValue);
 let MD5Matches = EventFileHash
-| join kind=innerunique (TIFileHash | where FileHashType == "MD5")
+| join kind=inner (TIFileHash | where FileHashType == "MD5")
 on $left.MD5 == $right.FileHashValue;
 let SHA256Matches = EventFileHash
-| join kind=innerunique (TIFileHash | where FileHashType == "SHA256")
+| join kind=inner (TIFileHash | where FileHashType == "SHA256")
 on $left.SHA256 == $right.FileHashValue;
 MD5Matches
 | union SHA256Matches
-| summarize arg_max(TimeGenerated, *) by Computer, OriginalFileName
+| summarize arg_max(TimeGenerated, *) by Computer, CommandLine
 ```
 
 Linux:
@@ -656,10 +656,10 @@ let TIFileHash = ThreatIntelligenceIndicator
 | where isnotempty(FileHashValue) and TimeGenerated >= ago(ioc_lookBack)
 | extend FileHashValue = toupper(FileHashValue);
 let MD5Matches = EventFileHash
-| join kind=innerunique (TIFileHash | where FileHashType == "MD5")
+| join kind=inner (TIFileHash | where FileHashType == "MD5")
 on $left.MD5 == $right.FileHashValue;
 let SHA256Matches = EventFileHash
-| join kind=innerunique (TIFileHash | where FileHashType == "SHA256")
+| join kind=inner (TIFileHash | where FileHashType == "SHA256")
 on $left.SHA256 == $right.FileHashValue;
 MD5Matches
 | union SHA256Matches
@@ -671,7 +671,7 @@ MD5Matches
 |`dt_lookBack` and `ioc_lookBack`|The period for events and indicators to be included in the query|
 |`let EventFileHash = …`|The sysmon event parsing query from above assigned to `EventFileHash`|
 |`let TIFileHash = …`|Select file hash indicators and assign to `TIFileHash`|
-|`let MD5Matches = …` and<br>`let SHA256Matches = …`|Using `innerunique` table `join` to select matching MD5 and SHA256 rows and assign to `MD5Matches` and `SHA256Matches`|
+|`let MD5Matches = …` and<br>`let SHA256Matches = …`|Using `inner` table `join` to select matching MD5 and SHA256 rows and assign to `MD5Matches` and `SHA256Matches`|
 |`MD5Matches … union SHA256Matches … summarize … by Computer, CommandLine`|Concatenate results from both matches and keep only entries with unique `Computer` and `CommandLine` combinations|
 
 ### 5.3. Create schedule query rule
