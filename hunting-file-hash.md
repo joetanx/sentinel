@@ -1,6 +1,6 @@
 ## 1. Introduction
 
-Organizations may sometimes need to verify if a certain file hash indicators exist in the environment
+Organizations may sometimes need to verify if certain file hash indicators exist in the environment
 
 This can be achieved by monitoring sysmon events and matching the file hashes against the indicators
 
