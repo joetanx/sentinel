@@ -6,3 +6,4 @@
 |Ingest events to Sentinel using logs ingestion API|https://github.com/joetanx/sentinel/blob/main/logs-ingestion-api.md|
 |Threat hunting in Sentinel for file hash indicators with Sysmon events|https://github.com/joetanx/sentinel/blob/main/hunting-file-hash.md|
 |Threat hunting in Sentinel for domain name indicators using Sysmon and syslog events|https://github.com/joetanx/sentinel/blob/main/hunting-domain-name.md|
+|Walk through on connecting Sentinel workspace to Defender portal|https://github.com/joetanx/sentinel/blob/main/defender-portal.md|
