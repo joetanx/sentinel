@@ -34,7 +34,7 @@ This write-up uses the following example setup to walk through the experience fo
 
 ### 1.2. Defender portal with zero roles assigned
 
-For reference, the Defender portal view for a newly user with no roles assigned is similar to below:
+For reference, the Defender portal view for a newly created user with no roles assigned is similar to below:
 
 <img width="1592" height="817" alt="image" src="https://github.com/user-attachments/assets/d76bc788-6741-4002-8df9-a026037a0830" />
 
