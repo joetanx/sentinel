@@ -117,3 +117,27 @@ The permission required for connecting and access Sentinel are different:
 |Accessing Sentinel from Defender portal|Microsoft Sentinel * roles based on required access|Resource group that contains the workspace|
 
 Although [this document](https://learn.microsoft.com/en-us/unified-secops-platform/microsoft-sentinel-onboard) says the Microsoft Sentinel roles can be assigned to the workspace, [this document](https://learn.microsoft.com/en-us/azure/sentinel/roles#microsoft-sentinel-specific-roles) says to assign the roles to the resource group that contains the workspace for best results, which is actually the required scope.
+
+### 3.2. Sentinel interface in Defender portal
+
+All functions of Sentinel are available in the Defender portal
+
+#### 3.2.1. User with permissions to only 1 workspace
+
+The workspace selection is at the top navigation, the navigation shows _All workspaces_ when the user only have access to a single workspace:
+
+<img width="1592" height="816" alt="image" src="https://github.com/user-attachments/assets/2209c1bf-c231-4252-be99-ca0861a56fb5" />
+
+Clicking on _All workspaces_ just shows the currently accessed workspace:
+
+<img width="1591" height="816" alt="image" src="https://github.com/user-attachments/assets/8fef636b-ba66-4304-bc4d-6b06f622c284" />
+
+#### 3.2.2. User with permissions to multiple workspace
+
+The navigation shows the name of the currently accessed workspace:
+
+<img width="1592" height="816" alt="image" src="https://github.com/user-attachments/assets/656cdbab-1125-44c9-beee-6e1da5775190" />
+
+Clicking on the workspace name allows the user to change workspace:
+
+<img width="1592" height="816" alt="image" src="https://github.com/user-attachments/assets/3bae8cb4-707a-481c-8dce-f78fe3034f95" />
