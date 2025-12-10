@@ -343,7 +343,7 @@ $body = @(
 ) | ConvertTo-Json
 ```
 
-Read more on [data structure in PowerShell](https://github.com/joetanx/setup/blob/main/web-request-notes.md#33-data-structure-in-powershell)
+Read more on [data structure in PowerShell](https://github.com/joetanx/setup/blob/main/notes/web-request.md#33-data-structure-in-powershell)
 
 > [!Tip]
 >
@@ -445,7 +445,7 @@ $body = @(
 > 
 > If the data is available in CSV, `ConvertFrom-Csv` or `Import-Csv` can also be used to quickly import it
 > 
-> Read more on [representing uniform data in PowerShell](https://github.com/joetanx/setup/blob/main/web-request-notes.md#31-uniform-data)
+> Read more on [representing uniform data in PowerShell](https://github.com/joetanx/setup/blob/main/notes/web-request.md#31-uniform-data)
 
 #### 3.2.2. Windows event example
 
@@ -566,7 +566,7 @@ $body = @(
 >
 > Unlike syslog, Windows events are non-uniform data, which may not be interpreted well when working with CSV
 > 
-> Read more on [representing non-uniform data in PowerShell](https://github.com/joetanx/setup/blob/main/web-request-notes.md#32-non-uniform-data)
+> Read more on [representing non-uniform data in PowerShell](https://github.com/joetanx/setup/blob/main/notes/web-request.md#32-non-uniform-data)
 
 ### 3.3. Send the prepared data to logs ingestion API
 
