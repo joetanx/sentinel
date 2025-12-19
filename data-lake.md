@@ -6,6 +6,12 @@
 
 ![](https://github.com/user-attachments/assets/d6ee69e2-99b2-45cb-b50c-9039b1a09a4d)
 
+Data lake setup takes some time:
+
 ![](https://github.com/user-attachments/assets/e973cd71-45b0-43c9-869f-5098e702a0c7)
 
 ![](https://github.com/user-attachments/assets/26d11181-1fcb-4593-a525-984641bc3a0a)
+
+Data lake setup completed:
+
+![](https://github.com/user-attachments/assets/d0d301c0-d86c-4629-8b2d-aacdac5786d2)
