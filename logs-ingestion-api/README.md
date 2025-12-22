@@ -162,13 +162,13 @@ The format of a DCR with columns truncated for brevity:
 
 More details on [DCR data flow](https://learn.microsoft.com/en-us/azure/azure-monitor/data-collection/data-collection-rule-structure#overview-of-dcr-data-flow)
 
-A DCR template for ingestion to the Sentinel tables (`CommonSecurityLog`, `SecurityEvent`, `Syslog`, `WindowsEvent`) is available [here](/dcr_template.json):
+A DCR template for ingestion to the Sentinel tables (`CommonSecurityLog`, `SecurityEvent`, `Syslog`, `WindowsEvent`) is available [here](/logs-ingestion-api/dcr_template.json):
 
 #### 2.2.3. Deploy the DCR template
 
 - Go to `Deploy a custom template`
 - Select `Build your own template in the editor`
-- Copy and paste the [dcr_template.json](dcr_template.json)
+- Copy and paste the [dcr_template.json](/logs-ingestion-api/dcr_template.json)
 
 ![image](https://github.com/user-attachments/assets/cce912ef-25a0-4d8a-8a50-f8e74ca59e99)
 
