@@ -1,19 +1,14 @@
-## 1. Azure Monitoring Agent
+## 1. Windows and Linux
 
-|OS|Machine Type|Installation|
-|---|---|---|
-|Windows|Azure VM|Automatically installed by Azure Windows VM agent (WindowsAzureGuestAgent.exe)|
-|Linux|Azure VM|Automatically installed by Azure Linux VM agent (waagent)|
-|Windows|Arc Machine|Automatically installed by AZCM agent|
-|Linux|Arc Machine|**Manual installation required**|
+![](https://github.com/user-attachments/assets/09d0ea20-e3ed-4394-a069-8614b78e1989)
 
-### 1.1. Manually installing AMA on Linux
+> [!Tip]
+>
+> Data collection rules (DCRs) work with Azure Monitor Agent (AMA) to collect events
+>
+> AMA is automatically installed by Azure VM agent or Azure Connected Machine agent when a machine is associated with a DCR
 
-## 2. Data Collection Rules
-
-Configure data connectors in Defender portal: left navigation pane → Microsoft Sentinel → Configuration → Data connectors → select the connector → Open connector page  → Create data collection rule
-
-### 2.1. Windows Security Events
+### 1.1. Windows Security Events
 
 |Table|Data connector|Content hub solution|
 |---|---|---|
@@ -46,7 +41,7 @@ Configure data connectors in Defender portal: left navigation pane → Microsoft
 >
 > Read more on the [Windows security events collected by Sentinel](/collection/windows-security-events.md)
 
-### 2.2. Microsoft Defender Antivirus Events
+### 1.2. Microsoft Defender Antivirus Events
 
 |Table|Data connector|Content hub solution|
 |---|---|---|
@@ -67,7 +62,7 @@ xPathQuery: `Microsoft-Windows-Windows Defender/Operational!*[System[(EventID=11
 
 ![](https://github.com/user-attachments/assets/8115b2a8-99d6-4424-9dad-aa9043f1524f)
 
-### 2.3. Windows Forwarded Events
+### 1.3. Windows Forwarded Events
 
 |Table|Data connector|Content hub solution|
 |---|---|---|
@@ -77,7 +72,7 @@ xPathQuery: `Microsoft-Windows-Windows Defender/Operational!*[System[(EventID=11
 
 ![](https://github.com/user-attachments/assets/fdd88969-1e2c-436f-9e87-e6ba5e47ce95)
 
-### 2.4. Linux Syslog
+### 1.4. Linux Syslog
 
 |Table|Data connector|Content hub solution|
 |---|---|---|
@@ -116,6 +111,27 @@ xPathQuery: `Microsoft-Windows-Windows Defender/Operational!*[System[(EventID=11
 > |`LOG_LPR`|For print server environments.|
 > |`LOG_NEWS` / `LOG_UUCP`|Rarely used today unless you're running legacy systems.|
 
+## 2. Azure policy
+
+https://learn.microsoft.com/en-us/azure/governance/policy/samples/built-in-policies#monitoring
+
+|Azure Policy|Description|
+|---|---|
+|**Windows:**||
+|Configure Windows **Machines** to be associated with a Data Collection Rule or a Data Collection Endpoint|Deploy Association to link Windows **virtual machines, virtual machine scale sets, and Arc machines** to the specified Data Collection Rule or the specified Data Collection Endpoint.|
+|Configure Windows **Virtual Machines** to be associated with a Data Collection Rule or a Data Collection Endpoint|Deploy Association to link Windows **virtual machines** to the specified Data Collection Rule or the specified Data Collection Endpoint. The list of locations and OS images are updated over time as support is increased.|
+|Configure Windows **Virtual Machine Scale** Sets to be associated with a Data Collection Rule or a Data Collection Endpoint|Deploy Association to link Windows **virtual machine scale sets** to the specified Data Collection Rule or the specified Data Collection Endpoint.|
+|Configure Windows **Arc Machines** to be associated with a Data Collection Rule or a Data Collection Endpoint|Deploy Association to link Windows **Arc machines** to the specified Data Collection Rule or the specified Data Collection Endpoint.|
+|Configure Windows **Arc-enabled machines** to run Azure Monitor Agent|Automate the deployment of Azure Monitor Agent extension on your Windows **Arc-enabled machines** for collecting telemetry data from the guest OS. This policy will install the extension if the OS and region are supported and system-assigned managed identity is en|
+|**Linux:**||
+|Configure Linux **Machines** to be associated with a Data Collection Rule or a Data Collection Endpoint|Deploy Association to link Linux **virtual machines, virtual machine scale sets, and Arc machines** to the specified Data Collection Rule or the specified Data Collection Endpoint.|
+|Configure Linux **Virtual Machines** to be associated with a Data Collection Rule or a Data Collection Endpoint|Deploy Association to link Linux **virtual machines** to the specified Data Collection Rule or the specified Data Collection Endpoint.|
+|Configure Linux **Virtual Machine Scale Sets** to be associated with a Data Collection Rule or a Data Collection Endpoint|Deploy Association to link Linux **virtual machine scale sets** to the specified Data Collection Rule or the specified Data Collection Endpoint.|
+|Configure Linux **Arc Machines** to be associated with a Data Collection Rule or a Data Collection Endpoint|Deploy Association to link Linux **Arc machines** to the specified Data Collection Rule or the specified Data Collection Endpoint.|
+|Configure Linux **Arc-enabled machines** to run Azure Monitor Agent|Automate the deployment of Azure Monitor Agent extension on your Linux **Arc-enabled machines** for collecting telemetry data from the guest OS. This policy will install the extension if the region is supported. Learn more: https://aka.ms/AMAOverview.|
+|**Others:**||
+|Enable logging by category group for *** to log analytics||
+
 ## 3. Other Events
 
 High volume, recommend for data lake
@@ -139,24 +155,3 @@ To mention NSG flow logs deprecation
 ### 3.5. Application Gateway
 
 
-
-## 4. Azure policy
-
-https://learn.microsoft.com/en-us/azure/governance/policy/samples/built-in-policies#monitoring
-
-|Azure Policy|Description|
-|---|---|
-|**Windows:**||
-|Configure Windows **Machines** to be associated with a Data Collection Rule or a Data Collection Endpoint|Deploy Association to link Windows **virtual machines, virtual machine scale sets, and Arc machines** to the specified Data Collection Rule or the specified Data Collection Endpoint.|
-|Configure Windows **Virtual Machines** to be associated with a Data Collection Rule or a Data Collection Endpoint|Deploy Association to link Windows **virtual machines** to the specified Data Collection Rule or the specified Data Collection Endpoint. The list of locations and OS images are updated over time as support is increased.|
-|Configure Windows **Virtual Machine Scale** Sets to be associated with a Data Collection Rule or a Data Collection Endpoint|Deploy Association to link Windows **virtual machine scale sets** to the specified Data Collection Rule or the specified Data Collection Endpoint.|
-|Configure Windows **Arc Machines** to be associated with a Data Collection Rule or a Data Collection Endpoint|Deploy Association to link Windows **Arc machines** to the specified Data Collection Rule or the specified Data Collection Endpoint.|
-|Configure Windows **Arc-enabled machines** to run Azure Monitor Agent|Automate the deployment of Azure Monitor Agent extension on your Windows **Arc-enabled machines** for collecting telemetry data from the guest OS. This policy will install the extension if the OS and region are supported and system-assigned managed identity is en|
-|**Linux:**||
-|Configure Linux **Machines** to be associated with a Data Collection Rule or a Data Collection Endpoint|Deploy Association to link Linux **virtual machines, virtual machine scale sets, and Arc machines** to the specified Data Collection Rule or the specified Data Collection Endpoint.|
-|Configure Linux **Virtual Machines** to be associated with a Data Collection Rule or a Data Collection Endpoint|Deploy Association to link Linux **virtual machines** to the specified Data Collection Rule or the specified Data Collection Endpoint.|
-|Configure Linux **Virtual Machine Scale Sets** to be associated with a Data Collection Rule or a Data Collection Endpoint|Deploy Association to link Linux **virtual machine scale sets** to the specified Data Collection Rule or the specified Data Collection Endpoint.|
-|Configure Linux **Arc Machines** to be associated with a Data Collection Rule or a Data Collection Endpoint|Deploy Association to link Linux **Arc machines** to the specified Data Collection Rule or the specified Data Collection Endpoint.|
-|Configure Linux **Arc-enabled machines** to run Azure Monitor Agent|Automate the deployment of Azure Monitor Agent extension on your Linux **Arc-enabled machines** for collecting telemetry data from the guest OS. This policy will install the extension if the region is supported. Learn more: https://aka.ms/AMAOverview.|
-|**Others:**||
-|Enable logging by category group for *** to log analytics||
