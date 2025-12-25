@@ -145,15 +145,15 @@ Select `Assign policy`:
 
 ![](https://github.com/user-attachments/assets/698bd7e8-8238-47f2-9099-266a1b1a055d)
 
-Select the scope to assign this policy (management group, subscription or resource group)
+Select the scope to assign this policy (management group, subscription or resource group):
 
 ![](https://github.com/user-attachments/assets/b432419e-bcd1-4194-b589-a527e562344a)
 
-Enter the resource Id:
+Enter the DCR resource Id:
 
 > [!Tip]
 >
-> Go to the DCR resource and check JSON view for the resource Id:
+> Go to the DCR resource and check `JSON View` for the resource Id:
 >
 > ![](https://github.com/user-attachments/assets/6666f786-f976-4054-abf0-0a60d5e7c6c7)
 
@@ -185,15 +185,15 @@ Select `Assign policy`:
 
 ![](https://github.com/user-attachments/assets/718717fa-aa4b-419d-b40c-d6549d76a503)
 
-Select the scope to assign this policy (management group, subscription or resource group)
+Select the scope to assign this policy (management group, subscription or resource group):
 
 ![](https://github.com/user-attachments/assets/6473d3ac-a72a-4f7e-a2a3-bfbc5c1b1011)
 
-Enter the resource Id:
+Enter the DCR resource Id:
 
 > [!Tip]
 >
-> Go to the LAW resources and check JSON view for the resource Id:
+> Go to the DCR resource and check `JSON View` for the resource Id:
 >
 > ![](https://github.com/user-attachments/assets/b6fc74eb-7b57-4a9e-82a6-f9bf2da65d91)
 
