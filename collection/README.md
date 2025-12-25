@@ -127,7 +127,9 @@ https://learn.microsoft.com/en-us/azure/governance/policy/samples/built-in-polic
 
 ### 2.1. Windows and Linux machines
 
-Windows:
+![](https://github.com/user-attachments/assets/34a4af92-fd35-4768-ad3b-6be21453fdb3)
+
+#### 2.1.1. Windows:
 
 |Policy Name|Description|
 |---|---|
@@ -137,7 +139,37 @@ Windows:
 |Configure Windows **Arc Machines** to be associated with a Data Collection Rule or a Data Collection Endpoint|Deploy Association to link Windows **Arc machines** to the specified Data Collection Rule or the specified Data Collection Endpoint.|
 |Configure Windows **Arc-enabled machines** to run Azure Monitor Agent|Automate the deployment of Azure Monitor Agent extension on your Windows **Arc-enabled machines** for collecting telemetry data from the guest OS. This policy will install the extension if the OS and region are supported and system-assigned managed identity is enabled, and skip install otherwise. Learn more: https://aka.ms/AMAOverview.|
 
-Linux:
+##### Assignment example
+
+Select `Assign policy`:
+
+![](https://github.com/user-attachments/assets/698bd7e8-8238-47f2-9099-266a1b1a055d)
+
+Select the scope to assign this policy (management group, subscription or resource group)
+
+![](https://github.com/user-attachments/assets/b432419e-bcd1-4194-b589-a527e562344a)
+
+Enter the resource Id:
+
+> [!Tip]
+>
+> Go to the DCR resource and check JSON view for the resource Id:
+>
+> ![](https://github.com/user-attachments/assets/6666f786-f976-4054-abf0-0a60d5e7c6c7)
+
+![](https://github.com/user-attachments/assets/64ce04e4-a8ef-4d67-ac00-f8018f1f58a0)
+
+Check `Create a remediation task`:
+
+![](https://github.com/user-attachments/assets/bbcced1a-690b-4776-9880-e0cde0b6f4df)
+
+The policy scans for uncompliant resources and creates remediation task automatically:
+
+![](https://github.com/user-attachments/assets/207e2fde-600a-4e3e-a17e-6cea38b295cc)
+
+![](https://github.com/user-attachments/assets/aeea7a5e-f450-4fe0-ab4c-5f0e6d205735)
+
+#### 2.1.2. Linux:
 
 |Policy Name|Description|
 |---|---|
@@ -147,7 +179,35 @@ Linux:
 |Configure Linux **Arc Machines** to be associated with a Data Collection Rule or a Data Collection Endpoint|Deploy Association to link Linux **Arc machines** to the specified Data Collection Rule or the specified Data Collection Endpoint.|
 |Configure Linux **Arc-enabled machines** to run Azure Monitor Agent|Automate the deployment of Azure Monitor Agent extension on your Linux **Arc-enabled machines** for collecting telemetry data from the guest OS. This policy will install the extension if the region is supported. Learn more: https://aka.ms/AMAOverview.|
 
-![](https://github.com/user-attachments/assets/34a4af92-fd35-4768-ad3b-6be21453fdb3)
+##### Assignment example
+
+Select `Assign policy`:
+
+![](https://github.com/user-attachments/assets/718717fa-aa4b-419d-b40c-d6549d76a503)
+
+Select the scope to assign this policy (management group, subscription or resource group)
+
+![](https://github.com/user-attachments/assets/6473d3ac-a72a-4f7e-a2a3-bfbc5c1b1011)
+
+Enter the resource Id:
+
+> [!Tip]
+>
+> Go to the LAW resources and check JSON view for the resource Id:
+>
+> ![](https://github.com/user-attachments/assets/b6fc74eb-7b57-4a9e-82a6-f9bf2da65d91)
+
+![](https://github.com/user-attachments/assets/18450216-75f0-4ade-abc1-631dcf9a46f3)
+
+Check `Create a remediation task`:
+
+![](https://github.com/user-attachments/assets/61d9b2c2-6820-4679-9f6b-6d047fe4e3f4)
+
+The policy scans for uncompliant resources and creates remediation task automatically:
+
+![](https://github.com/user-attachments/assets/207e2fde-600a-4e3e-a17e-6cea38b295cc)
+
+![](https://github.com/user-attachments/assets/edcdc071-d8fc-48ca-80e7-baeb24f23f08)
 
 ### 2.2. Azure services
 
