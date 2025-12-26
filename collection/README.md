@@ -239,9 +239,29 @@ The policy scans for uncompliant resources and creates remediation task automati
 
 High volume, recommend for data lake
 
-### 3.1. DNS query
+### 3.1. [Secure and view DNS traffic](https://learn.microsoft.com/en-us/azure/dns/dns-traffic-log-how-to)
 
+#### 3.1.1. Create DNS security policy
 
+![](https://github.com/user-attachments/assets/7d4fb0f4-7415-46dd-9ea2-0f4d9436a591)
+
+Select the virtual networks that the DNS security policy should apply to:
+
+![](https://github.com/user-attachments/assets/c1b35daf-ba4d-47ae-9094-319cf1d0cbb5)
+
+From the [Nov-2025 announcement](https://techcommunity.microsoft.com/blog/azurenetworkingblog/announcing-azure-dns-security-policy-with-threat-intelligence-feed-general-avail/4470183), Azure provides the _Azure DNS Threat Intel feed_ that tracks known malicious domain names:
+
+![](https://github.com/user-attachments/assets/30d5f5f8-11ba-4961-8ae3-d5e66eb37459)
+
+#### 3.1.2. Configure diagnostic settings to log to Sentinel
+
+DNS security policy → Monitoring → Diagnostic settings → Add diagnostic setting:
+
+![](https://github.com/user-attachments/assets/27ec3358-63d2-4b5d-92f5-be87194c873e)
+
+Select destination Sentinel worksapce and save:
+
+![](https://github.com/user-attachments/assets/178ddd85-6668-40cc-97de-b9fb54c74ddf)
 
 ### 3.2. Firewall
 
