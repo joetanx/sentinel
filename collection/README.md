@@ -237,8 +237,6 @@ The policy scans for uncompliant resources and creates remediation task automati
 
 ## 3. Other Events
 
-High volume, recommend for data lake
-
 ### 3.1. [Secure and view DNS traffic](https://learn.microsoft.com/en-us/azure/dns/dns-traffic-log-how-to)
 
 #### 3.1.1. Create DNS security policy
@@ -259,7 +257,7 @@ DNS security policy → Monitoring → Diagnostic settings → Add diagnostic se
 
 ![](https://github.com/user-attachments/assets/27ec3358-63d2-4b5d-92f5-be87194c873e)
 
-Select destination Sentinel worksapce and save:
+Select destination Sentinel workspace and save:
 
 ![](https://github.com/user-attachments/assets/178ddd85-6668-40cc-97de-b9fb54c74ddf)
 
@@ -283,17 +281,38 @@ DNSQueryLogs
 > ```kql
 > DNSQueryLogs
 > | where TimeGenerated > ago(30d)
-> | summarize 
+> | summarize
 >     RowCount = count(),
 >     Size_MB = sum(estimate_data_size(*)) / 1024 / 1024
 > ```
 >
 > ![](https://github.com/user-attachments/assets/7cf3dbf4-6011-4ce2-84c8-a82f7d5bb88d)
 
-
 ### 3.2. Firewall
 
+Firewall → Monitoring → Diagnostic settings → Add diagnostic setting:
 
+![](https://github.com/user-attachments/assets/fcc0b321-8d74-41df-8b04-77a67ed870cf)
+
+Select destination Sentinel workspace and save:
+
+![](https://github.com/user-attachments/assets/6a16e061-d819-4537-9c76-7af693069d94)
+
+> [!Warning]
+>
+> Firewall logs are highly verbose and can incur large ingestion and retention costs
+>
+> Check the `AzureDiagnostics` table size and consider retaining in Sentinel Data Lake to optimize cost
+>
+> ```kql
+> DNSQueryLogs
+> | where TimeGenerated > ago(30d) and ResourceType == "AZUREFIREWALLS"
+> | summarize
+>     RowCount = count(),
+>     Size_MB = sum(estimate_data_size(*)) / 1024 / 1024
+> ```
+>
+> ![](https://github.com/user-attachments/assets/0a3d2e11-8725-4abf-9d8d-47444b2deddc)
 
 ### 3.3. VNet Flow Logs
 
