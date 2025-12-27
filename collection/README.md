@@ -274,6 +274,23 @@ DNSQueryLogs
 
 ![](https://github.com/user-attachments/assets/bd7353ea-55d2-485b-b093-f92614f18317)
 
+> [!Warning]
+>
+> DNS query logs are highly verbose and can incur large ingestion and retention costs
+>
+> Check the `DNSQueryLogs` table size and consider retaining in Sentinel Data Lake to optimize cost
+>
+> ```kql
+> DNSQueryLogs
+> | where TimeGenerated > ago(30d)
+> | summarize 
+>     RowCount = count(),
+>     Size_MB = sum(estimate_data_size(*)) / 1024 / 1024
+> ```
+>
+> ![](https://github.com/user-attachments/assets/7cf3dbf4-6011-4ce2-84c8-a82f7d5bb88d)
+
+
 ### 3.2. Firewall
 
 
