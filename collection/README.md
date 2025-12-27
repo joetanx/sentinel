@@ -263,6 +263,17 @@ Select destination Sentinel worksapce and save:
 
 ![](https://github.com/user-attachments/assets/178ddd85-6668-40cc-97de-b9fb54c74ddf)
 
+#### 3.1.3. Blocked DNS query example
+
+![](https://github.com/user-attachments/assets/bdf29d28-ed4e-4ed8-91b7-66f6c2be2498)
+
+```kql
+DNSQueryLogs
+| where ResolverPolicyDomainListId == 'Azure DNS Threat Intel'
+```
+
+![](https://github.com/user-attachments/assets/bd7353ea-55d2-485b-b093-f92614f18317)
+
 ### 3.2. Firewall
 
 
