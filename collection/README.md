@@ -314,9 +314,51 @@ Select destination Sentinel workspace and save:
 >
 > ![](https://github.com/user-attachments/assets/0a3d2e11-8725-4abf-9d8d-47444b2deddc)
 
-### 3.3. VNet Flow Logs
+### 3.3. Virtual network flow log
 
-To mention NSG flow logs deprecation
+#### 3.3.1. Create flow log
+
+![](https://github.com/user-attachments/assets/9db1d08b-245f-43f9-b9a1-5d978d1fd106)
+
+VNet flow logs require a storage account:
+
+![](https://github.com/user-attachments/assets/3d307077-1ce8-4bed-a3be-d018ce89475d)
+
+Target resource can be:
+- Virtual network
+- Subnet
+- Network interface
+
+![](https://github.com/user-attachments/assets/437be706-3cab-4420-a099-978ca8e0c567)
+
+Enable traffic analytics to send flow logs to Sentinel:
+
+> [!Note]
+>
+> There are only 2 options for Traffic analytics processing interval:
+> - Every 1 hour
+> - Every 10 mins
+
+![](https://github.com/user-attachments/assets/88b1397c-83a1-4d46-8db7-308bf17324bf)
+
+> [!Tip]
+>
+> The subscription where the Sentinel workspace resides needs to be registered with provider `Microsoft.Network`, the error below occurs if it is not registered:
+>
+> ```
+> {
+>     "status": "Failed",
+>     "error": {
+>         "code": "CannotGetWorkspace",
+>         "message": "Could not get Log Analytics Workspace resource /subscriptions/b70fcef1-9e03-4184-9321-4266c7b469ab/resourceGroups/delta-security-rg/providers/Microsoft.OperationalInsights/workspaces/delta-soc. If workspace exists, check if its subscription b70fcef1-9e03-4184-9321-4266c7b469ab is registered with provider Microsoft.Network. You can use powershell cmdlet to do this: Register-AzResourceProvider -ProviderNamespace Microsoft.Network. Please retry operation after.",
+>         "details": []
+>     }
+> }
+> ```
+>
+> Use Azure PowerShell to register the subscription:
+>
+>  ![](https://github.com/user-attachments/assets/f2a91d28-fe47-4bbf-9718-a40ccb6b8103)
 
 ### 3.4. Key Vault
 
