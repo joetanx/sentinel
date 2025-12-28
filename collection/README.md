@@ -316,8 +316,6 @@ Select destination Sentinel workspace and save:
 
 ### 3.3. Virtual network flow log
 
-#### 3.3.1. Create flow log
-
 ![](https://github.com/user-attachments/assets/9db1d08b-245f-43f9-b9a1-5d978d1fd106)
 
 VNet flow logs require a storage account:
@@ -360,10 +358,18 @@ Enable traffic analytics to send flow logs to Sentinel:
 >
 >  ![](https://github.com/user-attachments/assets/f2a91d28-fe47-4bbf-9718-a40ccb6b8103)
 
-### 3.4. Key Vault
+### 3.4. Key vault
 
+Key vault → Monitoring → Diagnostic settings → Add diagnostic setting:
 
+![](https://github.com/user-attachments/assets/bb5ea6fe-850a-45f6-9a18-aaae169467b5)
 
-### 3.5. Application Gateway
+![](https://github.com/user-attachments/assets/aab04793-ee3a-4c90-bc3f-59af434fd846)
 
+### 3.5. Application gateway
 
+Application gateway → Monitoring → Diagnostic settings → Add diagnostic setting:
+
+![](https://github.com/user-attachments/assets/b9379e59-6709-431b-b316-f0eda0d26de2)
+
+![](https://github.com/user-attachments/assets/5b8c41de-8603-404c-bac0-d3930678887b)
