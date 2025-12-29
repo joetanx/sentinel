@@ -235,7 +235,11 @@ The policy scans for uncompliant resources and creates remediation task automati
 
 ![](https://github.com/user-attachments/assets/17a3c7d8-89da-4fb9-aacb-9eb57c7d84ee)
 
-## 3. Other Events
+## 3. [Azure Monitor resource logs](https://learn.microsoft.com/en-us/azure/azure-monitor/fundamentals/data-sources)
+
+Azure Monitor resource logs are stored in Log Analytics tables according to the respective categories and services.
+
+The table definitions are listed [here](https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables-index)
 
 ### 3.1. [Secure and view DNS traffic](https://learn.microsoft.com/en-us/azure/dns/dns-traffic-log-how-to)
 
@@ -251,13 +255,13 @@ From the [Nov-2025 announcement](https://techcommunity.microsoft.com/blog/azuren
 
 ![](https://github.com/user-attachments/assets/30d5f5f8-11ba-4961-8ae3-d5e66eb37459)
 
-#### 3.1.2. Configure diagnostic settings to log to Sentinel
+#### 3.1.2. Create diagnostic settings
 
 DNS security policy → Monitoring → Diagnostic settings → Add diagnostic setting:
 
 ![](https://github.com/user-attachments/assets/27ec3358-63d2-4b5d-92f5-be87194c873e)
 
-Select destination Sentinel workspace and save:
+Select destination Sentinel workspace:
 
 ![](https://github.com/user-attachments/assets/178ddd85-6668-40cc-97de-b9fb54c74ddf)
 
@@ -270,51 +274,56 @@ DNSQueryLogs
 | where ResolverPolicyDomainListId == 'Azure DNS Threat Intel'
 ```
 
-![](https://github.com/user-attachments/assets/bd7353ea-55d2-485b-b093-f92614f18317)
-
-> [!Warning]
->
-> DNS query logs are highly verbose and can incur large ingestion and retention costs
->
-> Check the `DNSQueryLogs` table size and consider retaining in Sentinel Data Lake to optimize cost
->
-> ```kql
-> DNSQueryLogs
-> | where TimeGenerated > ago(30d)
-> | summarize
->     RowCount = count(),
->     Size_MB = sum(estimate_data_size(*)) / 1024 / 1024
-> ```
->
-> ![](https://github.com/user-attachments/assets/7cf3dbf4-6011-4ce2-84c8-a82f7d5bb88d)
+![](https://github.com/user-attachments/assets/f01ddd15-366f-4029-be51-e1ba9833eb26)
 
 ### 3.2. Firewall
+
+#### 3.2.2. Create diagnostic settings
 
 Firewall → Monitoring → Diagnostic settings → Add diagnostic setting:
 
 ![](https://github.com/user-attachments/assets/fcc0b321-8d74-41df-8b04-77a67ed870cf)
 
-Select destination Sentinel workspace and save:
+Select categories and destination Sentinel workspace:
+
+Ref: https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/microsoft-network_azurefirewalls
+
+|Category|Sentinel table|Description|
+|---|---|---|
+|Azure Firewall Network Rule|`AZFWNetworkRule`|Contains all Network Rule log data. Each match between data plane and network rule creates a log entry with the data plane packet and the matched rule's attributes.|
+|Azure Firewall Application Rule|`AZFWApplicationRule`|Contains all Application rule log data. Each match between data plane and Application rule creates a log entry with the data plane packet and the matched rule's attributes.|
+|Azure Firewall Nat Rule|`AZFWNatRule`|Contains all DNAT (Destination Network Address Translation) events log data. Each match between data plane and DNAT rule creates a log entry with the data plane packet and the matched rule's attributes.|
+|Azure Firewall Threat Intelligence|`AZFWThreatIntel`|Contains all Threat Intelligence events.|
+|Azure Firewall IDPS Signature|`AZFWIdpsSignature`|Contains all data plane packets that were matched with one or more IDPS signatures.|
+|Azure Firewall DNS query|`AZFWDnsQuery`|Contains all DNS Proxy events log data.|
+|Azure Firewall FQDN Resolution Failure|`AZFWInternalFqdnResolutionFailure`|Contains all internal Firewall FQDN resolution requests that resulted in failure.|
+|Azure Firewall Fat Flow Log|`AZFWFatFlow`|This query returns the top flows across Azure Firewall instances. Log contains flow information, date transmission rate (in Megabits per second units) and the time period when the flows were recorded. Please follow the documentation to enable Top flow logging and details on how it is recorded.|
+|Azure Firewall Flow Trace Log|`AZFWFlowTrace`|Flow logs across Azure Firewall instances. Log contains flow information, flags and the time period when the flows were recorded. Please follow the documentation to enable flow trace logging and details on how it is recorded.|
+|Azure Firewall Network Rule Aggregation (Policy Analytics)|`AZFWNetworkRuleAggregation`|Contains aggregated Network rule log data for Policy Analytics.|
+|Azure Firewall Network Rule Aggregation (Policy Analytics)|`AZFWApplicationRuleAggregation`|Contains aggregated Application rule log data for Policy Analytics.|
+|	Azure Firewall Nat Rule Aggregation (Policy Analytics)|`AZFWNatRuleAggregation`|Contains aggregated NAT Rule log data for Policy Analytics.|
+|Azure Firewall DNS Flow Trace Log|`AZFWDnsFlowTrace`|Contains all the DNS proxy data between the client, firewall, and DNS server.|
+|`AzureFirewallApplicationRule`<br>Azure Firewall Application Rule (Legacy Azure Diagnostics)|`AzureDiagnostics`||
+|`AzureFirewallNetworkRule`<br>Azure Firewall Network Rule (Legacy Azure Diagnostics)|`AzureDiagnostics`||
+|`AzureFirewallDnsProxy`<br>Azure Firewall DNS Proxy (Legacy Azure Diagnostics)|`AzureDiagnostics`||
 
 ![](https://github.com/user-attachments/assets/34701b31-5f1b-4b3c-b196-8370ce419a50)
 
-> [!Warning]
->
-> Firewall logs are highly verbose and can incur large ingestion and retention costs
->
-> Check the `AzureDiagnostics` table size and consider retaining in Sentinel Data Lake to optimize cost
->
-> ```kql
-> DNSQueryLogs
-> | where TimeGenerated > ago(30d) and ResourceType == "AZUREFIREWALLS"
-> | summarize
->     RowCount = count(),
->     Size_MB = sum(estimate_data_size(*)) / 1024 / 1024
-> ```
->
-> ![](https://github.com/user-attachments/assets/0a3d2e11-8725-4abf-9d8d-47444b2deddc)
+#### 3.2.2. Firewall traffic query example
+
+```kql
+union
+    AZFWNetworkRule,
+    AZFWNatRule,
+    AZFWThreatIntel
+| sort by TimeGenerated desc
+```
+
+![](https://github.com/user-attachments/assets/7bcb6499-dc64-4c1d-9dd1-f1d90f0f1d37)
 
 ### 3.3. Virtual network flow log
+
+#### 3.3.1. Create VNet flow log
 
 ![](https://github.com/user-attachments/assets/9db1d08b-245f-43f9-b9a1-5d978d1fd106)
 
@@ -358,13 +367,44 @@ Enable traffic analytics to send flow logs to Sentinel:
 >
 >  ![](https://github.com/user-attachments/assets/f2a91d28-fe47-4bbf-9718-a40ccb6b8103)
 
-### 3.4. Bastion
+#### 3.3.2. VNet flow log query example
+
+```kql
+NTANetAnalytics
+| where FlowStatus == 'Denied'
+```
+
+![](https://github.com/user-attachments/assets/0f0af8bc-b0cf-4ec2-9dcf-55075aa043f0)
+
+### 3.4. Application gateway
+
+#### 3.4.1. Create diagnostic settings
+
+Application gateway → Monitoring → Diagnostic settings → Add diagnostic setting:
+
+![](https://github.com/user-attachments/assets/b9379e59-6709-431b-b316-f0eda0d26de2)
+
+![](https://github.com/user-attachments/assets/5b8c41de-8603-404c-bac0-d3930678887b)
+
+#### 3.4.2. Application gateway events query example
+
+```kql
+union
+    AGWAccessLogs,
+    AGWFirewallLogs,
+    AGWPerformanceLogs
+| sort by TimeGenerated desc
+```
+
+![](https://github.com/user-attachments/assets/17af2761-c792-4ea9-add7-dd6165cda46e)
+
+### 3.5. Bastion
 
 ![](https://github.com/user-attachments/assets/06aaaa04-3742-4d15-8b4a-3b43039e103c)
 
 ![](https://github.com/user-attachments/assets/d47f4d2f-4c45-4ed4-bc9e-5f64fc86d119)
 
-### 3.5. Key vault
+### 3.6. Key vault
 
 Key vault → Monitoring → Diagnostic settings → Add diagnostic setting:
 
@@ -372,10 +412,100 @@ Key vault → Monitoring → Diagnostic settings → Add diagnostic setting:
 
 ![](https://github.com/user-attachments/assets/aab04793-ee3a-4c90-bc3f-59af434fd846)
 
-### 3.6. Application gateway
+### 3.6. Managing Azure Monitor reource logs size
 
-Application gateway → Monitoring → Diagnostic settings → Add diagnostic setting:
+Azure Monitor reource logs are quite verbose and can incur large ingestion and retention costs
 
-![](https://github.com/user-attachments/assets/b9379e59-6709-431b-b316-f0eda0d26de2)
+Monitor the respective table sizes and consider retaining in Sentinel Data Lake to optimize cost
 
-![](https://github.com/user-attachments/assets/5b8c41de-8603-404c-bac0-d3930678887b)
+#### 3.6.1. DNS security policy
+
+```kql
+DNSQueryLogs
+| where TimeGenerated > ago(30d)
+| summarize
+    RowCount = count(),
+    Size_MB = sum(estimate_data_size(*)) / 1024 / 1024
+```
+
+![](https://github.com/user-attachments/assets/7cf3dbf4-6011-4ce2-84c8-a82f7d5bb88d)
+
+#### 3.6.2. Firewall
+
+```kql
+let period = 30d;
+let AZFWNetworkRuleSize = AZFWNetworkRule
+| where TimeGenerated > ago(period)
+| summarize
+    Table = 'AZFWNetworkRule',
+    RowCount = count(),
+    Size_MB = sum(estimate_data_size(*)) / 1024 / 1024;
+let AZFWNatRuleSize = AZFWNatRule
+| where TimeGenerated > ago(period)
+| summarize
+    Table = 'AZFWNatRule',
+    RowCount = count(),
+    Size_MB = sum(estimate_data_size(*)) / 1024 / 1024;
+let AZFWThreatIntelSize = AZFWThreatIntel
+| where TimeGenerated > ago(period)
+| summarize
+    Table = 'AZFWThreatIntel',
+    RowCount = count(),
+    Size_MB = sum(estimate_data_size(*)) / 1024 / 1024;
+union AZFWNetworkRuleSize, AZFWNatRuleSize, AZFWThreatIntelSize
+```
+
+![](https://github.com/user-attachments/assets/98c5d0ef-c72a-4c1f-9926-c1447a3e8594)
+
+<details><summary>Size query if firewall is logging to <code>AzureDiagnostics</code></summary>
+
+```kql
+AzureDiagnostics
+| where TimeGenerated > ago(30d) and ResourceType == "AZUREFIREWALLS"
+| summarize
+    RowCount = count(),
+    Size_MB = sum(estimate_data_size(*)) / 1024 / 1024
+```
+
+![](https://github.com/user-attachments/assets/0a3d2e11-8725-4abf-9d8d-47444b2deddc)
+
+</details>
+
+#### 3.6.3. VNet flow logs
+
+```kql
+NTANetAnalytics
+| where TimeGenerated > ago(30d)
+| summarize
+    RowCount = count(),
+    Size_MB = sum(estimate_data_size(*)) / 1024 / 1024
+```
+
+![](https://github.com/user-attachments/assets/94f52692-8169-45fd-a1ae-0b54934ceaf7)
+
+#### 3.6.4. Application gateway
+
+```kql
+let period = 30d;
+let AGWAccessLogsSize = AGWAccessLogs
+| where TimeGenerated > ago(period)
+| summarize
+    Table = 'AGWAccessLogs',
+    RowCount = count(),
+    Size_MB = sum(estimate_data_size(*)) / 1024 / 1024;
+let AGWFirewallLogsSize = AGWFirewallLogs
+| where TimeGenerated > ago(period)
+| summarize
+    Table = 'AGWFirewallLogs',
+    RowCount = count(),
+    Size_MB = sum(estimate_data_size(*)) / 1024 / 1024;
+let AGWPerformanceLogsSize = AGWPerformanceLogs
+| where TimeGenerated > ago(period)
+| summarize
+    Table = 'AZFWThreatIntel',
+    RowCount = count(),
+    Size_MB = sum(estimate_data_size(*)) / 1024 / 1024;
+union AGWAccessLogsSize, AGWFirewallLogsSize, AGWFirewallLogsSize
+```
+
+![](https://github.com/user-attachments/assets/9a210e59-aab0-418f-9466-37a5ec58de71)
