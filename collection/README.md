@@ -255,7 +255,7 @@ From the [Nov-2025 announcement](https://techcommunity.microsoft.com/blog/azuren
 
 ![](https://github.com/user-attachments/assets/30d5f5f8-11ba-4961-8ae3-d5e66eb37459)
 
-#### 3.1.2. Create diagnostic settings
+#### 3.1.2. Create diagnostic setting
 
 DNS security policy → Monitoring → Diagnostic settings → Add diagnostic setting:
 
@@ -278,7 +278,7 @@ DNSQueryLogs
 
 ### 3.2. Firewall
 
-#### 3.2.2. Create diagnostic settings
+#### 3.2.2. Create diagnostic setting
 
 Firewall → Monitoring → Diagnostic settings → Add diagnostic setting:
 
@@ -378,7 +378,7 @@ NTANetAnalytics
 
 ### 3.4. Application gateway
 
-#### 3.4.1. Create diagnostic settings
+#### 3.4.1. Create diagnostic setting
 
 Application gateway → Monitoring → Diagnostic settings → Add diagnostic setting:
 
@@ -400,17 +400,40 @@ union
 
 ### 3.5. Bastion
 
+#### 3.5.1. Create diagnostic setting
+
 ![](https://github.com/user-attachments/assets/06aaaa04-3742-4d15-8b4a-3b43039e103c)
 
 ![](https://github.com/user-attachments/assets/d47f4d2f-4c45-4ed4-bc9e-5f64fc86d119)
 
+#### 3.5.2. Bastion events query example
+
+```kql
+MicrosoftAzureBastionAuditLogs
+```
+
+![](https://github.com/user-attachments/assets/962f0c08-419d-49af-8a78-79d71ed590b7)
+
 ### 3.6. Key vault
+
+#### 3.6.1. Create diagnostic setting
 
 Key vault → Monitoring → Diagnostic settings → Add diagnostic setting:
 
 ![](https://github.com/user-attachments/assets/bb5ea6fe-850a-45f6-9a18-aaae169467b5)
 
 ![](https://github.com/user-attachments/assets/aab04793-ee3a-4c90-bc3f-59af434fd846)
+
+#### 3.6.2. Key vault events query example
+
+```kql
+AzureDiagnostics
+| where ResourceType == 'VAULTS'
+```
+
+![](https://github.com/user-attachments/assets/ad41b868-f9dc-4eb9-bf89-6fe763ba36ab)
+
+![](https://github.com/user-attachments/assets/c4e1b75f-6692-464b-9c19-8743c054fb4f)
 
 ### 3.6. Managing Azure Monitor reource logs size
 
@@ -461,7 +484,7 @@ union AZFWNetworkRuleSize, AZFWNatRuleSize, AZFWThreatIntelSize
 
 ```kql
 AzureDiagnostics
-| where TimeGenerated > ago(30d) and ResourceType == "AZUREFIREWALLS"
+| where TimeGenerated > ago(30d) and ResourceType == 'AZUREFIREWALLS'
 | summarize
     RowCount = count(),
     Size_MB = sum(estimate_data_size(*)) / 1024 / 1024
