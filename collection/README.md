@@ -278,7 +278,7 @@ DNSQueryLogs
 
 ### 3.2. Firewall
 
-#### 3.2.2. Create diagnostic setting
+#### 3.2.1. Create diagnostic setting
 
 Firewall → Monitoring → Diagnostic settings → Add diagnostic setting:
 
@@ -384,6 +384,8 @@ Application gateway → Monitoring → Diagnostic settings → Add diagnostic se
 
 ![](https://github.com/user-attachments/assets/b9379e59-6709-431b-b316-f0eda0d26de2)
 
+Select categories and destination Sentinel workspace:
+
 ![](https://github.com/user-attachments/assets/5b8c41de-8603-404c-bac0-d3930678887b)
 
 #### 3.4.2. Application gateway events query example
@@ -398,33 +400,33 @@ union
 
 ![](https://github.com/user-attachments/assets/17af2761-c792-4ea9-add7-dd6165cda46e)
 
-### 3.5. Bastion
+### 3.5. Key vault
 
 #### 3.5.1. Create diagnostic setting
-
-![](https://github.com/user-attachments/assets/06aaaa04-3742-4d15-8b4a-3b43039e103c)
-
-![](https://github.com/user-attachments/assets/d47f4d2f-4c45-4ed4-bc9e-5f64fc86d119)
-
-#### 3.5.2. Bastion events query example
-
-```kql
-MicrosoftAzureBastionAuditLogs
-```
-
-![](https://github.com/user-attachments/assets/962f0c08-419d-49af-8a78-79d71ed590b7)
-
-### 3.6. Key vault
-
-#### 3.6.1. Create diagnostic setting
 
 Key vault → Monitoring → Diagnostic settings → Add diagnostic setting:
 
 ![](https://github.com/user-attachments/assets/bb5ea6fe-850a-45f6-9a18-aaae169467b5)
 
+Select categories and destination Sentinel workspace:
+
+> [!Note]
+>
+> Unlike the diagnostic setting for firewall and application gateway, key vault does not have a destination table choice for `Azure diagnostics` or `Resource specific` tables
+>
+> 
+
 ![](https://github.com/user-attachments/assets/aab04793-ee3a-4c90-bc3f-59af434fd846)
 
-#### 3.6.2. Key vault events query example
+Select categories and destination Sentinel workspace:
+
+> [!Note]
+>
+> Unlike the diagnostic setting for firewall and application gateway, key vault does not have a destination table choice for `Azure diagnostics` or `Resource specific` tables
+>
+> The key vault events go into `AzureDiagnostics` table instead of the `AZKVAuditLogs` and `AZKVPolicyEvaluationDetailsLogs` tables mentioned [here](https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/microsoft-keyvault_vaults)
+
+#### 3.5.2. Key vault events query example
 
 ```kql
 AzureDiagnostics
@@ -435,13 +437,31 @@ AzureDiagnostics
 
 ![](https://github.com/user-attachments/assets/c4e1b75f-6692-464b-9c19-8743c054fb4f)
 
-### 3.6. Managing Azure Monitor reource logs size
+### 3.6. Bastion
+
+#### 3.6.1. Create diagnostic setting
+
+![](https://github.com/user-attachments/assets/06aaaa04-3742-4d15-8b4a-3b43039e103c)
+
+Select destination Sentinel workspace:
+
+![](https://github.com/user-attachments/assets/d47f4d2f-4c45-4ed4-bc9e-5f64fc86d119)
+
+#### 3.6.2. Bastion events query example
+
+```kql
+MicrosoftAzureBastionAuditLogs
+```
+
+![](https://github.com/user-attachments/assets/962f0c08-419d-49af-8a78-79d71ed590b7)
+
+### 3.7. Managing Azure Monitor reource logs size
 
 Azure Monitor reource logs are quite verbose and can incur large ingestion and retention costs
 
 Monitor the respective table sizes and consider retaining in Sentinel Data Lake to optimize cost
 
-#### 3.6.1. DNS security policy
+#### 3.7.1. DNS security policy
 
 ```kql
 DNSQueryLogs
@@ -453,7 +473,7 @@ DNSQueryLogs
 
 ![](https://github.com/user-attachments/assets/7cf3dbf4-6011-4ce2-84c8-a82f7d5bb88d)
 
-#### 3.6.2. Firewall
+#### 3.7.2. Firewall
 
 ```kql
 let period = 30d;
@@ -494,7 +514,7 @@ AzureDiagnostics
 
 </details>
 
-#### 3.6.3. VNet flow logs
+#### 3.7.3. VNet flow logs
 
 ```kql
 NTANetAnalytics
@@ -506,7 +526,7 @@ NTANetAnalytics
 
 ![](https://github.com/user-attachments/assets/94f52692-8169-45fd-a1ae-0b54934ceaf7)
 
-#### 3.6.4. Application gateway
+#### 3.7.4. Application gateway
 
 ```kql
 let period = 30d;
