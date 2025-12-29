@@ -78,6 +78,23 @@ xPathQuery: `Microsoft-Windows-Windows Defender/Operational!*[System[(EventID=11
 |---|---|---|
 |`Syslog`|Syslog via AMA|Syslog|
 
+<details><summary>AMA on Linux - manual installation example</summary>
+
+```sh
+curl -sLO https://github.com/Azure/Azure-Sentinel/raw/refs/heads/master/DataConnectors/Syslog/Forwarder_AMA_installer.py
+python Forwarder_AMA_installer.py
+```
+
+![image](https://github.com/user-attachments/assets/8bfd847e-143a-4963-93a0-dd1c21286ba2)
+
+![image](https://github.com/user-attachments/assets/5d55e148-25a7-42c0-9443-c540ff95bac2)
+
+Check AMA status `systemctl status azuremonitor*`:
+
+![image](https://github.com/user-attachments/assets/dd272461-8668-45ce-b551-c1ce5e6cae7d)
+
+</details>
+
 ![](https://github.com/user-attachments/assets/09fe6786-a854-498a-a814-ab1591e62adc)
 
 ![](https://github.com/user-attachments/assets/bde254b0-16c6-4319-848c-0fc82d5f124c)
