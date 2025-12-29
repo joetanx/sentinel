@@ -129,7 +129,7 @@ https://learn.microsoft.com/en-us/azure/governance/policy/samples/built-in-polic
 
 ![](https://github.com/user-attachments/assets/34a4af92-fd35-4768-ad3b-6be21453fdb3)
 
-#### 2.1.1. Windows:
+#### 2.1.1. Windows
 
 ##### Run AMA
 
@@ -178,7 +178,7 @@ The policy scans for uncompliant resources and creates remediation task automati
 
 ![](https://github.com/user-attachments/assets/aeea7a5e-f450-4fe0-ab4c-5f0e6d205735)
 
-#### 2.1.2. Linux:
+#### 2.1.2. Linux
 
 ##### Run AMA
 
@@ -296,7 +296,7 @@ Firewall → Monitoring → Diagnostic settings → Add diagnostic setting:
 
 Select destination Sentinel workspace and save:
 
-![](https://github.com/user-attachments/assets/6a16e061-d819-4537-9c76-7af693069d94)
+![](https://github.com/user-attachments/assets/34701b31-5f1b-4b3c-b196-8370ce419a50)
 
 > [!Warning]
 >
