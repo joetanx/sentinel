@@ -358,7 +358,13 @@ Enable traffic analytics to send flow logs to Sentinel:
 >
 >  ![](https://github.com/user-attachments/assets/f2a91d28-fe47-4bbf-9718-a40ccb6b8103)
 
-### 3.4. Key vault
+### 3.4. Bastion
+
+![](https://github.com/user-attachments/assets/06aaaa04-3742-4d15-8b4a-3b43039e103c)
+
+![](https://github.com/user-attachments/assets/d47f4d2f-4c45-4ed4-bc9e-5f64fc86d119)
+
+### 3.5. Key vault
 
 Key vault → Monitoring → Diagnostic settings → Add diagnostic setting:
 
@@ -366,7 +372,7 @@ Key vault → Monitoring → Diagnostic settings → Add diagnostic setting:
 
 ![](https://github.com/user-attachments/assets/aab04793-ee3a-4c90-bc3f-59af434fd846)
 
-### 3.5. Application gateway
+### 3.6. Application gateway
 
 Application gateway → Monitoring → Diagnostic settings → Add diagnostic setting:
 
