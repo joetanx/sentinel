@@ -46,6 +46,21 @@
   </Event>
 ```
 
+### 1.2. KQL Query
+
+```kql
+SecurityEvent
+| where EventID == 4625
+```
+
+![](https://github.com/user-attachments/assets/3596311e-697e-4105-ba48-f04603861a7c)
+
+### 1.3. Detection Rule
+
+![](https://github.com/user-attachments/assets/d1817383-86ee-43eb-ba1f-02cc4e6008e1)
+
+![](https://github.com/user-attachments/assets/d8b3c55b-9e39-4702-a901-ac03677ba1e3)
+
 ## 2. Linux
 
 ### 2.1. Example sshd logon failures
@@ -75,3 +90,20 @@ Dec 31 08:10:21 delta-vm-ubuntu sshd[982]: Failed password for logon from 10.0.0
 Dec 31 08:10:22 delta-vm-ubuntu sshd[982]: Connection reset by authenticating user logon 10.0.0.4 port 62687 [preauth]
 Dec 31 08:10:22 delta-vm-ubuntu sshd[982]: PAM 2 more authentication failures; logname= uid=0 euid=0 tty=ssh ruser= rhost=10.0.0.4  user=logon
 ```
+
+### 2.2. KQL Query
+
+```kql
+Syslog
+| where Facility in ('auth', 'authpriv') and ProcessName =~ 'sshd' and SyslogMessage contains 'failed password'
+| extend Username = extract(@"Failed password for (?:invalid user |)(\S+)", 1, SyslogMessage)
+| extend RemoteIP = extract(@"from (\d{1,3}(?:\.\d{1,3}){3})", 1, SyslogMessage)
+```
+
+![](https://github.com/user-attachments/assets/68c43499-3b2e-46f9-9c73-c92d7577495e)
+
+### 2.3. Detection Rule
+
+![](https://github.com/user-attachments/assets/1e1a548a-3efd-4606-b2cb-5efed8b6d64a)
+
+![](https://github.com/user-attachments/assets/bb0d33c3-1722-42a8-a3cb-3c04a4c841c7)
