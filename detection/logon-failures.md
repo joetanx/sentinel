@@ -49,13 +49,31 @@
 ### 1.2. KQL Query
 
 ```kql
+let lookback = 12h;
+let isCurrentHourAnomalous = SecurityEvent
+| where EventID == 4625 and TimeGenerated >= ago(lookback)
+| make-series FailedLogons = count() on TimeGenerated from ago(lookback) to now() step 1h
+| extend (anomalous, score, baseline) = series_decompose_anomalies(FailedLogons)
+| mv-expand TimeGenerated to typeof(datetime), FailedLogons, anomalous, score, baseline
+| where anomalous == 1 and TimeGenerated >= ago(1h);
 SecurityEvent
-| where EventID == 4625
+| where isnotempty(toscalar(isCurrentHourAnomalous)) and EventID == 4625 and TimeGenerated >= ago(1h)
 ```
 
 ![](https://github.com/user-attachments/assets/3596311e-697e-4105-ba48-f04603861a7c)
 
 ### 1.3. Detection Rule
+
+**Title:** _Anomalous Windows Authentication Failure Activity_
+
+**Description:**
+
+> An abnormal volume of Windows 4625 failed logon events is identified with look back over the past 12 hours.
+>
+> Using series_decompose_anomalies() with default values:
+> - threshold=1.5 (for detecting mild or stronger anomalies)
+> - seasonality=-1 (autodetect seasonality using series_periods_detect)
+> - trend=linefit (extract trend component using linear regression)
 
 ![](https://github.com/user-attachments/assets/d1817383-86ee-43eb-ba1f-02cc4e6008e1)
 
@@ -94,8 +112,15 @@ Dec 31 08:10:22 delta-vm-ubuntu sshd[982]: PAM 2 more authentication failures; l
 ### 2.2. KQL Query
 
 ```kql
+let lookback = 12h;
+let isCurrentHourAnomalous = Syslog
+| where Facility in ('auth', 'authpriv') and ProcessName =~ 'sshd' and SyslogMessage contains 'failed password' and TimeGenerated >= ago(lookback)
+| make-series FailedLogons = count() on TimeGenerated from ago(lookback) to now() step 1h
+| extend (anomalous, score, baseline) = series_decompose_anomalies(FailedLogons)
+| mv-expand TimeGenerated to typeof(datetime), FailedLogons, anomalous, score, baseline
+| where anomalous == 1 and TimeGenerated >= ago(1h);
 Syslog
-| where Facility in ('auth', 'authpriv') and ProcessName =~ 'sshd' and SyslogMessage contains 'failed password'
+| where isnotempty(toscalar(isCurrentHourAnomalous)) and Facility in ('auth', 'authpriv') and ProcessName =~ 'sshd' and SyslogMessage contains 'failed password' and TimeGenerated >= ago(1h)
 | extend Username = extract(@"Failed password for (?:invalid user |)(\S+)", 1, SyslogMessage)
 | extend RemoteIP = extract(@"from (\d{1,3}(?:\.\d{1,3}){3})", 1, SyslogMessage)
 ```
@@ -103,6 +128,17 @@ Syslog
 ![](https://github.com/user-attachments/assets/68c43499-3b2e-46f9-9c73-c92d7577495e)
 
 ### 2.3. Detection Rule
+
+**Title:** _Anomalous Linux Authentication Failure Activity_
+
+**Description:**
+
+> An abnormal volume of Linux failed logon password events is identified with look back over the past 12 hours.
+>
+> Using series_decompose_anomalies() with default values:
+> - threshold=1.5 (for detecting mild or stronger anomalies)
+> - seasonality=-1 (autodetect seasonality using series_periods_detect)
+> - trend=linefit (extract trend component using linear regression)
 
 ![](https://github.com/user-attachments/assets/1e1a548a-3efd-4606-b2cb-5efed8b6d64a)
 
