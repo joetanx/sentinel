@@ -60,7 +60,7 @@ SecurityEvent
 | where isnotempty(toscalar(isCurrentHourAnomalous)) and EventID == 4625 and TimeGenerated >= ago(1h)
 ```
 
-![](https://github.com/user-attachments/assets/3596311e-697e-4105-ba48-f04603861a7c)
+![](https://github.com/user-attachments/assets/9aac656a-f7f2-4394-addf-c9bc6daa6b11)
 
 ### 1.3. Detection Rule
 
@@ -75,9 +75,9 @@ SecurityEvent
 > - seasonality=-1 (autodetect seasonality using series_periods_detect)
 > - trend=linefit (extract trend component using linear regression)
 
-![](https://github.com/user-attachments/assets/d1817383-86ee-43eb-ba1f-02cc4e6008e1)
+![](https://github.com/user-attachments/assets/843ff925-091f-459b-9bf6-9b861f133123)
 
-![](https://github.com/user-attachments/assets/d8b3c55b-9e39-4702-a901-ac03677ba1e3)
+![](https://github.com/user-attachments/assets/43430d9b-6bcb-4c0f-9272-4b4765373d59)
 
 ## 2. Linux
 
@@ -121,11 +121,11 @@ let isCurrentHourAnomalous = Syslog
 | where anomalous == 1 and TimeGenerated >= ago(1h);
 Syslog
 | where isnotempty(toscalar(isCurrentHourAnomalous)) and Facility in ('auth', 'authpriv') and ProcessName =~ 'sshd' and SyslogMessage contains 'failed password' and TimeGenerated >= ago(1h)
-| extend Username = extract(@"Failed password for (?:invalid user |)(\S+)", 1, SyslogMessage)
+| extend User = extract(@"Failed password for (?:invalid user |)(\S+)", 1, SyslogMessage)
 | extend RemoteIP = extract(@"from (\d{1,3}(?:\.\d{1,3}){3})", 1, SyslogMessage)
 ```
 
-![](https://github.com/user-attachments/assets/68c43499-3b2e-46f9-9c73-c92d7577495e)
+![](https://github.com/user-attachments/assets/87da8aa6-ff1f-4f08-9cdd-bd8ec1e9f98d)
 
 ### 2.3. Detection Rule
 
@@ -140,6 +140,12 @@ Syslog
 > - seasonality=-1 (autodetect seasonality using series_periods_detect)
 > - trend=linefit (extract trend component using linear regression)
 
-![](https://github.com/user-attachments/assets/1e1a548a-3efd-4606-b2cb-5efed8b6d64a)
+![](https://github.com/user-attachments/assets/42ce50a3-1dce-48a8-9aca-f7670c6cce92)
 
-![](https://github.com/user-attachments/assets/bb0d33c3-1722-42a8-a3cb-3c04a4c841c7)
+![](https://github.com/user-attachments/assets/83785c69-3c4d-4d05-8834-5c4db031bebf)
+
+## 3. Incidents and alerts
+
+![](https://github.com/user-attachments/assets/89ae9dce-1d52-4db0-9649-940ddcd18759)
+
+![](https://github.com/user-attachments/assets/553795ad-01f7-46d9-8148-5a997e5866b7)
