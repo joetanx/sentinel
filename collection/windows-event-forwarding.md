@@ -510,7 +510,8 @@ Resolution: This can usually occur when the collector is rebooting, or the colle
 
 `The WinRM client sent a request to an HTTP server and got a response saying the requested HTTP URL was not available.`
 
-![image](https://github.com/user-attachments/assets/529fdf11-521e-441e-adc1-6327f3fc0390)
+![image](https://github.com/user-attachments/assets/005a0916-cc35-403b-978b-c84f4fffc3ee)
+
 
 Possible cause:
 - This error message is somewhat misleading, this doesn't mean that the collector cannot be reached (which would be the error above)
