@@ -3,47 +3,47 @@
 ### 1.1. Example event 4625: `An account failed to log on.`
 
 ```xml
-- <Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
-- <System>
-  <Provider Name="Microsoft-Windows-Security-Auditing" Guid="{54849625-5478-4994-a5ba-3e3b0328c30d}" /> 
-  <EventID>4625</EventID> 
-  <Version>0</Version> 
-  <Level>0</Level> 
-  <Task>12544</Task> 
-  <Opcode>0</Opcode> 
-  <Keywords>0x8010000000000000</Keywords> 
-  <TimeCreated SystemTime="2025-12-31T01:32:59.9278361Z" /> 
-  <EventRecordID>21914</EventRecordID> 
-  <Correlation ActivityID="{38d9161f-6cda-46bb-a720-a464a964a890}" /> 
-  <Execution ProcessID="856" ThreadID="6228" /> 
-  <Channel>Security</Channel> 
-  <Computer>delta-vm-winsvr</Computer> 
-  <Security /> 
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-Security-Auditing" Guid="{54849625-5478-4994-a5ba-3e3b0328c30d}" /> 
+    <EventID>4625</EventID> 
+    <Version>0</Version> 
+    <Level>0</Level> 
+    <Task>12544</Task> 
+    <Opcode>0</Opcode> 
+    <Keywords>0x8010000000000000</Keywords> 
+    <TimeCreated SystemTime="2025-12-31T01:32:59.9278361Z" /> 
+    <EventRecordID>21914</EventRecordID> 
+    <Correlation ActivityID="{38d9161f-6cda-46bb-a720-a464a964a890}" /> 
+    <Execution ProcessID="856" ThreadID="6228" /> 
+    <Channel>Security</Channel> 
+    <Computer>delta-vm-winsvr</Computer> 
+    <Security /> 
   </System>
-- <EventData>
-  <Data Name="SubjectUserSid">S-1-0-0</Data> 
-  <Data Name="SubjectUserName">-</Data> 
-  <Data Name="SubjectDomainName">-</Data> 
-  <Data Name="SubjectLogonId">0x0</Data> 
-  <Data Name="TargetUserSid">S-1-0-0</Data> 
-  <Data Name="TargetUserName">azureuser</Data> 
-  <Data Name="TargetDomainName">-</Data> 
-  <Data Name="Status">0xc000006d</Data> 
-  <Data Name="FailureReason">%%2313</Data> 
-  <Data Name="SubStatus">0xc000006a</Data> 
-  <Data Name="LogonType">3</Data> 
-  <Data Name="LogonProcessName">NtLmSsp</Data> 
-  <Data Name="AuthenticationPackageName">NTLM</Data> 
-  <Data Name="WorkstationName">vm000005</Data> 
-  <Data Name="TransmittedServices">-</Data> 
-  <Data Name="LmPackageName">-</Data> 
-  <Data Name="KeyLength">0</Data> 
-  <Data Name="ProcessId">0x0</Data> 
-  <Data Name="ProcessName">-</Data> 
-  <Data Name="IpAddress">10.10.0.6</Data> 
-  <Data Name="IpPort">0</Data> 
+  <EventData>
+    <Data Name="SubjectUserSid">S-1-0-0</Data> 
+    <Data Name="SubjectUserName">-</Data> 
+    <Data Name="SubjectDomainName">-</Data> 
+    <Data Name="SubjectLogonId">0x0</Data> 
+    <Data Name="TargetUserSid">S-1-0-0</Data> 
+    <Data Name="TargetUserName">azureuser</Data> 
+    <Data Name="TargetDomainName">-</Data> 
+    <Data Name="Status">0xc000006d</Data> 
+    <Data Name="FailureReason">%%2313</Data> 
+    <Data Name="SubStatus">0xc000006a</Data> 
+    <Data Name="LogonType">3</Data> 
+    <Data Name="LogonProcessName">NtLmSsp</Data> 
+    <Data Name="AuthenticationPackageName">NTLM</Data> 
+    <Data Name="WorkstationName">vm000005</Data> 
+    <Data Name="TransmittedServices">-</Data> 
+    <Data Name="LmPackageName">-</Data> 
+    <Data Name="KeyLength">0</Data> 
+    <Data Name="ProcessId">0x0</Data> 
+    <Data Name="ProcessName">-</Data> 
+    <Data Name="IpAddress">10.10.0.6</Data> 
+    <Data Name="IpPort">0</Data> 
   </EventData>
-  </Event>
+</Event>
 ```
 
 ### 1.2. KQL Query
