@@ -47,6 +47,14 @@
 |---|---|---|
 |`SecurityEvents`|Windows Security Events via AMA|Windows Security Events|
 
+![](https://github.com/user-attachments/assets/bc473e6e-7f40-4200-8db9-3eed2b5ac6ec)
+
+xPathQuery:
+
+```cmd
+Microsoft-Windows-Windows Defender/Operational!*[System[(EventID=1116) or (EventID=1117)]]
+```
+
 > [!Note]
 >
 > [Microsoft Defender Antivirus event IDs](https://learn.microsoft.com/en-us/defender-endpoint/troubleshoot-microsoft-defender-antivirus)
@@ -55,10 +63,6 @@
 > |---|---|
 > |1116|The antimalware platform detected malware or other potentially unwanted software.|
 > |1117|The antimalware platform performed an action to protect your system from malware or other potentially unwanted software.|
-
-![](https://github.com/user-attachments/assets/bc473e6e-7f40-4200-8db9-3eed2b5ac6ec)
-
-xPathQuery: `Microsoft-Windows-Windows Defender/Operational!*[System[(EventID=1116) or (EventID=1117)]]`
 
 ![](https://github.com/user-attachments/assets/8115b2a8-99d6-4424-9dad-aa9043f1524f)
 
