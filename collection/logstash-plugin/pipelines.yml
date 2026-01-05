@@ -1,0 +1,9 @@
+# /usr/share/logstash/config/pipelines.yml
+- pipeline.id: main
+  path.config: "/usr/share/logstash/pipeline/main.conf"
+- pipeline.id: elasticsearch-output
+  path.config: "/usr/share/logstash/pipeline/elasticsearch.conf"
+- pipeline.id: sentinel-syslog-output
+  path.config: "/usr/share/logstash/pipeline/sentinel-syslog.conf"
+- pipeline.id: sentinel-securityevent-output
+  path.config: "/usr/share/logstash/pipeline/sentinel-securityevent.conf"
