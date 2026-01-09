@@ -44,7 +44,7 @@ Example usage in n8n
 
 e.g. https://n8n.vx/rest/oauth2-credential/callback
 
-![](https://github.com/user-attachments/assets/5b0f4612-480a-42d5-9cac-0501d1c26083)
+![](https://github.com/user-attachments/assets/4ac07b8a-6b8b-455c-b500-72601afb8392)
 
 ### 2.5. Configure redirect URL
 
