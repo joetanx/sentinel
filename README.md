@@ -7,4 +7,4 @@
 |[File hash hunting](/detection/hunting-file-hash.md)|Threat hunting in Sentinel for file hash indicators with Sysmon events|
 |[Domain name hunting](/detection/hunting-domain-name.md)|Threat hunting in Sentinel for domain name indicators using Sysmon and syslog events|
 |[Sentinel in Defender portal](/defender-portal.md)|Walk through on connecting Sentinel workspace to Defender portal|
-|[Data lake](/data-lake.md)|Write-up on Sentinel data lake use cases|
+|[Sentinel MCP](/mcp.md)|Write-up on using [Sentinel MCP](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-mcp-overview) for agentic operations|
