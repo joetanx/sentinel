@@ -1,6 +1,4 @@
-## 1. Prerequisites
-
-<details><summary><h3>1.1. Setup Sentinel Data Lake</h3></summary>
+<details><summary><h2>0. Setup Sentinel Data Lake</h2></summary>
 
 ![](https://github.com/user-attachments/assets/781430ac-9a0f-49e3-a992-2fbde10b92f8)
 
@@ -20,7 +18,9 @@ Data lake setup completed:
 
 </details>
 
-### 1.2. Using VS Code with GitHub Enterprise account
+## 1. Using Sentinel MCP with VS Code
+
+### 1.1. Using VS Code with GitHub Enterprise account
 
 Click on the GitHub Copilot icon and select `Use AI Features`:
 
@@ -48,7 +48,7 @@ Verify account signed in:
 
 ![](https://github.com/user-attachments/assets/dd844dd7-f179-4919-8b1b-9293ce1e79f1)
 
-## 2. Adding data exploration MCP server to VS Code
+### 1.2. Adding data exploration MCP server to VS Code
 
 Click on top bar and select `Show and Run Commands >` (or press `Ctrl` + `Shift` + `P`):
 
@@ -80,7 +80,7 @@ Verify account signed in (note that the GHE.com account can be different from th
 
 ![](https://github.com/user-attachments/assets/2ed60927-3f68-4e25-88e7-8bab63743332)
 
-### 2.1. VS Code MCP server configuration
+### 1.3. VS Code MCP server configuration file
 
 Config file location: `%USERPROFILE%\AppData\Roaming\Code\User\mcp.json`
 
@@ -126,7 +126,7 @@ Clicking `More...` brings up the option to `Disconnect Account` (so that the MCP
 >
 > ![](https://github.com/user-attachments/assets/19132ebf-1d14-45c5-9a4c-367cea024504)
 
-## 3. Using data exploration MCP server
+### 1.4. Using data exploration MCP server
 
 The agent asks for permission to use the tool:
 
@@ -140,7 +140,7 @@ If the agent provides an input to the tool, the input can be reviewed with the p
 
 ![](https://github.com/user-attachments/assets/f3cf687d-8534-4917-b12f-c5d2d954f868)
 
-## 4. VS Code agent instructions
+### 1.5. VS Code agent instructions
 
 VS Code supports multiple types of Markdown-based [instructions files](https://code.visualstudio.com/docs/copilot/customization/custom-instructions#_type-of-instructions-files)
 
@@ -176,11 +176,17 @@ The agent interaction corresponds to this incident:
 
 ![](https://github.com/user-attachments/assets/f8cb6e52-b5bf-442e-8901-1afcca5dc491)
 
-## 5. Create app registration for Sentinel MCP Server
+## 2. Using Sentinel MCP with Foundry
+
+## 3. Using Sentinel MCP with third-party agent framework
+
+Example: n8n
+
+### 3.1. Create app registration for Sentinel MCP Server
 
 ![](https://github.com/user-attachments/assets/33df02d0-0288-49a2-9bf8-e36c4b836d25)
 
-### 5.1. Configure API permission
+### 3.2. Configure API permission
 
 ![](https://github.com/user-attachments/assets/8bba6a14-91a9-4bd6-b40f-2fe91987d1d5)
 
@@ -194,13 +200,13 @@ Search for and select `Sentinel Platform Services`:
 
 ![](https://github.com/user-attachments/assets/b5830a18-98bc-4d20-8d59-4b5457de6c99)
 
-### 5.2. Create client secret
+### 3.3. Create client secret
 
 ![](https://github.com/user-attachments/assets/ad2649ab-6dd1-4c77-8a66-efaacf990b68)
 
-### 5.3. Configure redirect URL
+### 3.4. Configure redirect URL
 
-example: n8n - https://n8n.vx/rest/oauth2-credential/callback
+Example: https://n8n.vx/rest/oauth2-credential/callback
 
 ![](https://github.com/user-attachments/assets/4ac07b8a-6b8b-455c-b500-72601afb8392)
 
