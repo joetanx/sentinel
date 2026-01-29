@@ -1,4 +1,6 @@
-<details><summary><h2>0. Setup Sentinel Data Lake</summary>
+## 1. Prerequisites
+
+<details><summary><h3>1.1. Setup Sentinel Data Lake</h3></summary>
 
 ![](https://github.com/user-attachments/assets/781430ac-9a0f-49e3-a992-2fbde10b92f8)
 
@@ -18,9 +20,7 @@ Data lake setup completed:
 
 </details>
 
-## 1. Using data exploration collection with Visual Studio Code
-
-### 1.1. Example login with GitHub Enterprise account
+### 1.2. Using VS Code with GitHub Enterprise account
 
 Click on the GitHub Copilot icon and select `Use AI Features`:
 
@@ -48,7 +48,7 @@ Verify account signed in:
 
 ![](https://github.com/user-attachments/assets/dd844dd7-f179-4919-8b1b-9293ce1e79f1)
 
-### 1.2. Add data exploration MCP server
+## 2. Adding data exploration MCP server to VS Code
 
 Click on top bar and select `Show and Run Commands >` (or press `Ctrl` + `Shift` + `P`):
 
@@ -80,32 +80,73 @@ Verify account signed in (note that the GHE.com account can be different from th
 
 ![](https://github.com/user-attachments/assets/2ed60927-3f68-4e25-88e7-8bab63743332)
 
-### 1.3. Example configuration files
+### 2.1. VS Code MCP server configuration
 
-VS Code MCP server config file (`%USERPROFILE%\AppData\Roaming\Code\User\mcp.json`)
+Config file location: `%USERPROFILE%\AppData\Roaming\Code\User\mcp.json`
+
+Example:
 
 ```json
 {
-	"servers": {
-		"Data exploration": {
-			"url": "https://sentinel.microsoft.com/mcp/data-exploration",
-			"type": "http"
-		},
-		"Triage": {
-			"url": "https://sentinel.microsoft.com/mcp/triage",
-			"type": "http"
-		},
-		"SCP agent creation": {
-			"url": "https://sentinel.microsoft.com/mcp/security-copilot-agent-creation",
-			"type": "http"
-		}
-	},
-	"inputs": []
+  "servers": {
+    "Data exploration": {
+      "url": "https://sentinel.microsoft.com/mcp/data-exploration",
+      "type": "http"
+    },
+    "Triage": {
+      "url": "https://sentinel.microsoft.com/mcp/triage",
+      "type": "http"
+    },
+    "SCP agent creation": {
+      "url": "https://sentinel.microsoft.com/mcp/security-copilot-agent-creation",
+      "type": "http"
+    }
+  },
+  "inputs": []
 }
 ```
 
-VS Code agent [instructions](https://code.visualstudio.com/docs/copilot/customization/custom-instructions) (e.g. `%USERPROFILE%\AppData\Roaming\Code\User\prompts\security-operations.instructions.md`)
-- instructions
+The controls to start, stop or restart MCP servers:
+
+![](https://github.com/user-attachments/assets/2330e139-0393-4c8e-9357-fb3111f16364)
+
+Clicking `More...` brings up the option to `Disconnect Account` (so that the MCP server can be signed in with a different account with different access):
+
+![](https://github.com/user-attachments/assets/ad17596a-bcf7-461d-874c-082df5c5514c)
+
+> [!Tip]
+>
+> Opening the `mcp.json` from _Explorer_ or _Open Recent_ doesn't bring up the MCP controls
+>
+> Select `Configure Tools...` from the chat pane:
+>
+> ![](https://github.com/user-attachments/assets/052b69af-6ad9-4f19-a9a7-616e720e1f1c)
+>
+> And click on the configure (gear) icon to bring up `mcp.json` files with the MCP controls
+>
+> ![](https://github.com/user-attachments/assets/19132ebf-1d14-45c5-9a4c-367cea024504)
+
+## 3. Using data exploration MCP server
+
+The agent asks for permission to use the tool:
+
+![](https://github.com/user-attachments/assets/80c0d64e-06fd-48dd-a158-eccab9e7cde3)
+
+![](https://github.com/user-attachments/assets/a7a5b54c-5b9c-4538-945b-afb41055800c)
+
+If the agent provides an input to the tool, the input can be reviewed with the permission request:
+
+![](https://github.com/user-attachments/assets/3f1caa4f-3373-49b8-ba49-9346f56c1382)
+
+![](https://github.com/user-attachments/assets/f3cf687d-8534-4917-b12f-c5d2d954f868)
+
+## 4. VS Code agent instructions
+
+VS Code supports multiple types of Markdown-based [instructions files](https://code.visualstudio.com/docs/copilot/customization/custom-instructions#_type-of-instructions-files)
+
+e.g.: `%USERPROFILE%\AppData\Roaming\Code\User\prompts\security-operations.instructions.md`
+
+The agent can be made more purpose driven with instructions like below:
 
 ```md
 ---
@@ -119,11 +160,27 @@ You are a security operations assistant.
 - the array in `AlertIds` column from `SecurityIncident` table provides alert IDs that corresponds to `SystemAlertId` column in `SecurityAlert` table 
 ```
 
-## 2. Create app registration for Sentinel MCP Server
+The agent followed instructions and identified the workspace and table to query:
+
+![](https://github.com/user-attachments/assets/2e8a12fd-0dfe-48bf-beb6-5c70e15c9f08)
+
+![](https://github.com/user-attachments/assets/cb55a138-eb0c-4dfd-ac5e-e7dc93182387)
+
+The agent can request for multiple tool usages wherever applicable:
+
+![](https://github.com/user-attachments/assets/56b80743-793c-4db8-8fde-046375a89773)
+
+![](https://github.com/user-attachments/assets/dd3441fd-1aee-479f-9650-486639bd01eb)
+
+The agent interaction corresponds to this incident:
+
+![](https://github.com/user-attachments/assets/f8cb6e52-b5bf-442e-8901-1afcca5dc491)
+
+## 5. Create app registration for Sentinel MCP Server
 
 ![](https://github.com/user-attachments/assets/33df02d0-0288-49a2-9bf8-e36c4b836d25)
 
-### 2.1. Configure API permission
+### 5.1. Configure API permission
 
 ![](https://github.com/user-attachments/assets/8bba6a14-91a9-4bd6-b40f-2fe91987d1d5)
 
@@ -137,11 +194,11 @@ Search for and select `Sentinel Platform Services`:
 
 ![](https://github.com/user-attachments/assets/b5830a18-98bc-4d20-8d59-4b5457de6c99)
 
-### 2.2. Create client secret
+### 5.2. Create client secret
 
 ![](https://github.com/user-attachments/assets/ad2649ab-6dd1-4c77-8a66-efaacf990b68)
 
-### 2.3. Configure redirect URL
+### 5.3. Configure redirect URL
 
 example: n8n - https://n8n.vx/rest/oauth2-credential/callback
 
