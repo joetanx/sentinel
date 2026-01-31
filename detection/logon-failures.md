@@ -70,10 +70,10 @@ SecurityEvent
 
 > An abnormal volume of Windows 4625 failed logon events is identified with look back over the past 12 hours.
 >
-> Using series_decompose_anomalies() with default values:
-> - threshold=1.5 (for detecting mild or stronger anomalies)
-> - seasonality=-1 (autodetect seasonality using series_periods_detect)
-> - trend=linefit (extract trend component using linear regression)
+> Using `series_decompose_anomalies()` with default values:
+> - _threshold_ = 1.5 (for detecting mild or stronger anomalies)
+> - _seasonality_ = -1 (autodetect seasonality using `series_periods_detect`)
+> - _trend_ = `linefit` (extract trend component using linear regression)
 
 ![](https://github.com/user-attachments/assets/843ff925-091f-459b-9bf6-9b861f133123)
 
@@ -135,10 +135,10 @@ Syslog
 
 > An abnormal volume of Linux failed logon password events is identified with look back over the past 12 hours.
 >
-> Using series_decompose_anomalies() with default values:
-> - threshold=1.5 (for detecting mild or stronger anomalies)
-> - seasonality=-1 (autodetect seasonality using series_periods_detect)
-> - trend=linefit (extract trend component using linear regression)
+> Using `series_decompose_anomalies()` with default values:
+> - _threshold_ = 1.5 (for detecting mild or stronger anomalies)
+> - _seasonality_ = -1 (autodetect seasonality using `series_periods_detect`)
+> - _trend_ = `linefit` (extract trend component using linear regression)
 
 ![](https://github.com/user-attachments/assets/42ce50a3-1dce-48a8-9aca-f7670c6cce92)
 
