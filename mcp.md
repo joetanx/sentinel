@@ -54,7 +54,7 @@ Verify account signed in:
 
 ## 1. Using SDL [data exploration tools](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-mcp-data-exploration-tool)  [with VS Code](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-mcp-use-tool-visual-studio-code)
 
-### 1.1. Adding data exploration MCP server to VS Code
+### 1.1. Adding data exploration tools to VS Code
 
 Click on top bar and select `Show and Run Commands >` (or press `Ctrl` + `Shift` + `P`):
 
@@ -184,11 +184,11 @@ The agent interaction corresponds to this incident:
 
 ## 2. Using SDL [data exploration tools](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-mcp-data-exploration-tool)  [with Foundry](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-mcp-use-tool-azure-ai-foundry)
 
-### 2.1. Create agent
+### 2.1. Create Foundry agent
 
 ![](https://github.com/user-attachments/assets/abdd595e-9bd8-470b-97f8-731f5a014edc)
 
-### 2.2. Connect MCP server
+### 2.2. Adding data exploration tools to Foundry agent
 
 #### 2.2.1. Option 1: create from the agent
 
@@ -231,9 +231,6 @@ If the agent provides an input to the tool, the input can be reviewed with the p
 The agent can be made more purpose driven with instructions like below:
 
 ```md
----
-applyTo: '**'
----
 You are a security operations assistant. 
 - default workspace: delta-soc f119dae4-df67-44a1-b5c7-caa589bcc8ce 
 - incidents: `SecurityIncident` table 
@@ -293,3 +290,70 @@ App registration → Authentication → Add a platform:
 ![](https://github.com/user-attachments/assets/1b9db5a5-2c62-4a50-be87-ea918272746c)
 
 ![](https://github.com/user-attachments/assets/ebe0f25d-ae54-45a9-b72d-d03f8eec9905)
+
+### 3.2. Adding data exploration tools to n8n agent
+
+![](https://github.com/user-attachments/assets/4008640a-cb05-4721-8387-34872140082c)
+
+![](https://github.com/user-attachments/assets/2c7c82c4-00bf-46b2-a278-ff787b5ed478)
+
+Configure OAuth2 authentication in n8n:
+
+> [!Important]
+>
+> The OAuth Redirect URL match match the redirect URI configured in the app registration
+>
+> The n8n environment variable `N8N_EDITOR_BASE_URL` forms the base of the redirect URL (e.g. https://n8n.vx/)
+
+|Parameter|Value|
+|---|---|
+|Use Dynamic Client Registration|No|
+|Grant Type|Authorization Code|
+|Authorization URL|https://login.microsoftonline.com/<tenant-id>/oauth2/v2.0/authorize|
+|Access Token URL|https://login.microsoftonline.com/<tenant-id>/oauth2/v2.0/token|
+|Client ID|The client ID of the app registration created|
+|Client Secret|The client secret created for the app registration|
+|Scope|`4500ebfb-89b6-4b14-a480-7f749797bfcd/.default`|
+
+![](https://github.com/user-attachments/assets/9cffd8f1-3bc1-4b47-9266-1e854a997862)
+
+Click `Connect my account` and complete the Entra ID sign in:
+
+![](https://github.com/user-attachments/assets/000d6189-5007-4f66-8d36-642724a7490e)
+
+The account show `Account connected` upon successfully sign-in:
+
+![](https://github.com/user-attachments/assets/323a2b3d-5feb-4280-829d-af786ba7f03e)
+
+Select the "play" button (Execute step) to test the MCP connection:
+
+![](https://github.com/user-attachments/assets/1ee3e653-f610-4dd4-ad3a-2c0cb72b4692)
+
+The MCP connection is function if the tools are listed:
+
+![](https://github.com/user-attachments/assets/707c4b2e-1589-4711-a7da-65c5616e3441)
+
+### 3.3. Using data exploration tools
+
+![](https://github.com/user-attachments/assets/46693a74-f900-4a93-abb7-ade6004d6a51)
+
+![](https://github.com/user-attachments/assets/ff729b2f-1211-45c2-9da6-867b7836ee76)
+
+### 3.4. n8n agent instructions
+
+The agent can be made more purpose driven with instructions like below:
+
+```md
+You are a security operations assistant. 
+- default workspace: delta-soc f119dae4-df67-44a1-b5c7-caa589bcc8ce 
+- incidents: `SecurityIncident` table 
+- alerts: `SecurityAlert` table 
+- incident IDs are in the `ProviderIncidentId` column 
+- the array in `AlertIds` column from `SecurityIncident` table provides alert IDs that corresponds to `SystemAlertId` column in `SecurityAlert` table 
+```
+
+![](https://github.com/user-attachments/assets/b428d7bf-bfaf-431a-9dd2-4afbb0fb5385)
+
+![](https://github.com/user-attachments/assets/41b92442-463d-409d-ad51-c712eb4530f6)
+
+![](https://github.com/user-attachments/assets/b15f138b-3e7b-4497-8fd6-39276de1b1e8)
