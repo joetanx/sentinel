@@ -52,7 +52,7 @@ Verify account signed in:
 
 ### 0.3. [Setup Foundry resource](https://github.com/joetanx/mslab/blob/main/foundry.md)
 
-## 1. Using SDL [data exploration tools](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-mcp-data-exploration-tool) [with VS Code](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-mcp-use-tool-visual-studio-code)
+## 1. Using SDL [data exploration tools](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-mcp-data-exploration-tool)  [with VS Code](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-mcp-use-tool-visual-studio-code)
 
 ### 1.1. Adding data exploration MCP server to VS Code
 
@@ -182,7 +182,7 @@ The agent interaction corresponds to this incident:
 
 ![](https://github.com/user-attachments/assets/f8cb6e52-b5bf-442e-8901-1afcca5dc491)
 
-## 2. Using SDL [data exploration tools](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-mcp-data-exploration-tool) [with Foundry](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-mcp-use-tool-azure-ai-foundry)
+## 2. Using SDL [data exploration tools](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-mcp-data-exploration-tool)  [with Foundry](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-mcp-use-tool-azure-ai-foundry)
 
 ### 2.1. Create agent
 
@@ -254,15 +254,15 @@ The agent can request for multiple tool usages wherever applicable:
 
 ![](https://github.com/user-attachments/assets/26cf7e0e-c796-4c88-9be2-91e5af767c8d)
 
-## 3. Using Sentinel MCP with third-party agent framework
+## 3. Using SDL [data exploration tools](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-mcp-data-exploration-tool) with third-party agent framework
 
-Example: n8n
+While not officially supported, the [custom tool instructions](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-mcp-use-tool-azure-ai-foundry#add-a-custom-tool-collection) to create app registration works to work with third party agent frameworks like n8n
 
 ### 3.1. Create app registration for Sentinel MCP Server
 
 ![](https://github.com/user-attachments/assets/33df02d0-0288-49a2-9bf8-e36c4b836d25)
 
-### 3.2. Configure API permission
+#### 3.1.1. Configure API permission
 
 ![](https://github.com/user-attachments/assets/8bba6a14-91a9-4bd6-b40f-2fe91987d1d5)
 
@@ -276,11 +276,11 @@ Search for and select `Sentinel Platform Services`:
 
 ![](https://github.com/user-attachments/assets/b5830a18-98bc-4d20-8d59-4b5457de6c99)
 
-### 3.3. Create client secret
+#### 3.1.2. Create client secret
 
 ![](https://github.com/user-attachments/assets/ad2649ab-6dd1-4c77-8a66-efaacf990b68)
 
-### 3.4. Configure redirect URL
+#### 3.1.3. Configure redirect URL
 
 Example: https://n8n.vx/rest/oauth2-credential/callback
 
