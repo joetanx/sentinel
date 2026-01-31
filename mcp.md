@@ -1,4 +1,6 @@
-<details><summary><h2>0. Setup Sentinel Data Lake</h2></summary>
+## 0. Preparations
+
+<details><summary><h3>0.1. Setup Sentinel Data Lake (SDL)</h3></summary>
 
 ![](https://github.com/user-attachments/assets/781430ac-9a0f-49e3-a992-2fbde10b92f8)
 
@@ -18,9 +20,7 @@ Data lake setup completed:
 
 </details>
 
-## 1. Using Sentinel MCP with VS Code
-
-### 1.1. Using VS Code with GitHub Enterprise account
+<details><summary><h3>0.2. Using VS Code with GitHub Enterprise account</h3></summary>
 
 Click on the GitHub Copilot icon and select `Use AI Features`:
 
@@ -47,6 +47,12 @@ Sign in to GHE instance:
 Verify account signed in:
 
 ![](https://github.com/user-attachments/assets/dd844dd7-f179-4919-8b1b-9293ce1e79f1)
+
+</details>
+
+### 0.3. [Setup Foundry resource](https://github.com/joetanx/mslab/blob/main/foundry.md)
+
+## 1. Using SDL [data exploration tools](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-mcp-data-exploration-tool) [with VS Code](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-mcp-use-tool-visual-studio-code)
 
 ### 1.2. Adding data exploration MCP server to VS Code
 
@@ -126,19 +132,19 @@ Clicking `More...` brings up the option to `Disconnect Account` (so that the MCP
 >
 > ![](https://github.com/user-attachments/assets/19132ebf-1d14-45c5-9a4c-367cea024504)
 
-### 1.4. Using data exploration MCP server
+### 1.4. Using data exploration tools
 
 The agent asks for permission to use the tool:
 
-![](https://github.com/user-attachments/assets/80c0d64e-06fd-48dd-a158-eccab9e7cde3)
+![](https://github.com/user-attachments/assets/5c276f2a-7284-4f90-ac96-f3798a22eaaa)
 
-![](https://github.com/user-attachments/assets/a7a5b54c-5b9c-4538-945b-afb41055800c)
+![](https://github.com/user-attachments/assets/9d2f0eac-8820-4ed9-b0b5-d112cf902cb2)
 
 If the agent provides an input to the tool, the input can be reviewed with the permission request:
 
-![](https://github.com/user-attachments/assets/3f1caa4f-3373-49b8-ba49-9346f56c1382)
+![](https://github.com/user-attachments/assets/a1ce5881-6f0c-4c2e-ab6a-204c9aefde50)
 
-![](https://github.com/user-attachments/assets/f3cf687d-8534-4917-b12f-c5d2d954f868)
+![](https://github.com/user-attachments/assets/56160371-b976-4321-9d85-bdde5a05c8ab)
 
 ### 1.5. VS Code agent instructions
 
@@ -160,23 +166,93 @@ You are a security operations assistant.
 - the array in `AlertIds` column from `SecurityIncident` table provides alert IDs that corresponds to `SystemAlertId` column in `SecurityAlert` table 
 ```
 
-The agent followed instructions and identified the workspace and table to query:
+The agent used the instructions to identify the workspace and table to query:
 
-![](https://github.com/user-attachments/assets/2e8a12fd-0dfe-48bf-beb6-5c70e15c9f08)
+![](https://github.com/user-attachments/assets/2d42a296-2ca0-488f-9082-2c98c15d6bb0)
 
-![](https://github.com/user-attachments/assets/cb55a138-eb0c-4dfd-ac5e-e7dc93182387)
+![](https://github.com/user-attachments/assets/a57013b6-18db-439f-adcf-69d970fd5a03)
 
 The agent can request for multiple tool usages wherever applicable:
 
-![](https://github.com/user-attachments/assets/56b80743-793c-4db8-8fde-046375a89773)
+![](https://github.com/user-attachments/assets/cf32e15d-96e3-485f-bc03-6cf7bf05781b)
 
-![](https://github.com/user-attachments/assets/dd3441fd-1aee-479f-9650-486639bd01eb)
+![](https://github.com/user-attachments/assets/385c211e-6d20-4f87-b76b-02f553acad4d)
 
 The agent interaction corresponds to this incident:
 
 ![](https://github.com/user-attachments/assets/f8cb6e52-b5bf-442e-8901-1afcca5dc491)
 
-## 2. Using Sentinel MCP with Foundry
+## 2. Using SDL [data exploration tools](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-mcp-data-exploration-tool) [with Foundry](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-mcp-use-tool-azure-ai-foundry)
+
+### 2.1. Create agent
+
+![](https://github.com/user-attachments/assets/abdd595e-9bd8-470b-97f8-731f5a014edc)
+
+### 2.2. Connect MCP server
+
+#### 2.2.1. Option 1: create from the agent
+
+![](https://github.com/user-attachments/assets/b9c8a2ed-b571-4ce4-8aa3-8eef241e0a81)
+
+![](https://github.com/user-attachments/assets/e4afe540-a73a-4ef9-949f-4f0283e9b32a)
+
+![](https://github.com/user-attachments/assets/4ca2f30f-ce86-4fbe-b259-df55910186b1)
+
+#### 2.2.2. Option 2: create from tools page, then connect to the agent
+
+![](https://github.com/user-attachments/assets/b94d8ce4-769c-4851-becd-7bd27881ceed)
+
+![](https://github.com/user-attachments/assets/c535f86d-7316-44fc-a5ae-7483992ae518)
+
+![](https://github.com/user-attachments/assets/f021f2e2-db3b-43b5-94c2-b61e79cc787c)
+
+### 2.3. Using data exploration tools
+
+The agent asks for permission to use the tool:
+
+![](https://github.com/user-attachments/assets/e388aec8-7ab7-472a-88dd-8b1d325cc053)
+
+![](https://github.com/user-attachments/assets/d6f14b53-c39d-4f2a-b5d9-06ac24e124c0)
+
+If the agent provides an input to the tool, the input can be reviewed with the permission request:
+
+- agents can make mistakes, notice that it first attempts to send the query in natural language:
+
+  ![](https://github.com/user-attachments/assets/2ec1bb98-2715-4e6a-8d4a-b491c5a31a40)
+
+- it then realized that it should send a KQL:
+
+  ![](https://github.com/user-attachments/assets/aab63f67-8cf4-4282-a27d-2fd288920d2d)
+
+![](https://github.com/user-attachments/assets/cf19f7a1-1ec8-40cd-bd2b-54243067304d)
+
+### 2.4. Foundry agent instructions
+
+The agent can be made more purpose driven with instructions like below:
+
+```md
+---
+applyTo: '**'
+---
+You are a security operations assistant. 
+- default workspace: delta-soc f119dae4-df67-44a1-b5c7-caa589bcc8ce 
+- incidents: `SecurityIncident` table 
+- alerts: `SecurityAlert` table 
+- incident IDs are in the `ProviderIncidentId` column 
+- the array in `AlertIds` column from `SecurityIncident` table provides alert IDs that corresponds to `SystemAlertId` column in `SecurityAlert` table 
+```
+
+![](https://github.com/user-attachments/assets/b77dccc2-075e-4852-ae52-290a09363c7a)
+
+The agent used the instructions to identify the workspace and table to query:
+
+![](https://github.com/user-attachments/assets/9f636e0e-6f05-4789-aa5c-6935775aa134)
+
+![](https://github.com/user-attachments/assets/e60cb493-c5f9-4f72-a195-70573c0fb48f)
+
+The agent can request for multiple tool usages wherever applicable:
+
+![](https://github.com/user-attachments/assets/26cf7e0e-c796-4c88-9be2-91e5af767c8d)
 
 ## 3. Using Sentinel MCP with third-party agent framework
 
