@@ -54,7 +54,7 @@ Verify account signed in:
 
 ## 1. Using SDL [data exploration tools](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-mcp-data-exploration-tool) [with VS Code](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-mcp-use-tool-visual-studio-code)
 
-### 1.2. Adding data exploration MCP server to VS Code
+### 1.1. Adding data exploration MCP server to VS Code
 
 Click on top bar and select `Show and Run Commands >` (or press `Ctrl` + `Shift` + `P`):
 
@@ -86,7 +86,7 @@ Verify account signed in (note that the GHE.com account can be different from th
 
 ![](https://github.com/user-attachments/assets/2ed60927-3f68-4e25-88e7-8bab63743332)
 
-### 1.3. VS Code MCP server configuration file
+### 1.2. VS Code MCP server configuration file
 
 Config file location: `%USERPROFILE%\AppData\Roaming\Code\User\mcp.json`
 
@@ -132,7 +132,7 @@ Clicking `More...` brings up the option to `Disconnect Account` (so that the MCP
 >
 > ![](https://github.com/user-attachments/assets/19132ebf-1d14-45c5-9a4c-367cea024504)
 
-### 1.4. Using data exploration tools
+### 1.3. Using data exploration tools
 
 The agent asks for permission to use the tool:
 
@@ -146,7 +146,7 @@ If the agent provides an input to the tool, the input can be reviewed with the p
 
 ![](https://github.com/user-attachments/assets/56160371-b976-4321-9d85-bdde5a05c8ab)
 
-### 1.5. VS Code agent instructions
+### 1.4. VS Code agent instructions
 
 VS Code supports multiple types of Markdown-based [instructions files](https://code.visualstudio.com/docs/copilot/customization/custom-instructions#_type-of-instructions-files)
 
