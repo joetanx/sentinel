@@ -403,6 +403,18 @@ Verify account signed in (notice that the GHE.com account can be different from 
 
 ### 4.2. Using triage tools
 
+> [!Important]
+>
+> Agents can perform poorly when being exposed to too many tools, mainly due to:
+> 1. All enabled tools are processed by agents, which means that the cumulative tool descriptions are fit into agent context window
+> 2. Tools provided under a MCP server usually have similar though distinct functions, this makes it different for agents to pick the right tool to use because the desriptions may be semantically similar
+>
+> The triage tool collections has 27 tools, the selection tools to enable can vastly impact the agent performance
+
+The below example prompts are performed with the follow tools enabled:
+
+![](https://github.com/user-attachments/assets/49c83549-dd66-4005-b735-a90bdb138a6c)
+
 #### Prompt: _list incidents from the past 3 days_
 
 ![](https://github.com/user-attachments/assets/f4587c5d-8fb3-4ac4-acbe-0d76c01ad723)
