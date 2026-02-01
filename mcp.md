@@ -1,11 +1,11 @@
 ## 0. Preparations
 
-### 0.1. Permissions
+### 0.1. Permissions and platforms
 
-|Tool|Permissions|
-|---|---|
-|[Data exploration](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-mcp-data-exploration-tool)|Security Reader at Entra level|
-|[Triage](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-mcp-triage-tool)|Tools available corresponds to [Defender Unified RBAC permissions](https://learn.microsoft.com/en-us/defender-xdr/custom-permissions-details)|
+|Tool|Permissions|Agent platforms|
+|---|---|---|
+|[Data exploration](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-mcp-data-exploration-tool)|Security Reader at Entra level|• Microsoft Foundry<br>• Visual Studio Code<br>• Third-party agent framework (not officially documented)|
+|[Triage](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-mcp-triage-tool)|Tools available corresponds to<br>[Defender Unified RBAC permissions](https://learn.microsoft.com/en-us/defender-xdr/custom-permissions-details)|• Visual Studio Code|
 
 <details><summary><h3>0.2. Setup Sentinel Data Lake (SDL)</h3></summary>
 
@@ -27,7 +27,9 @@ Data lake setup completed:
 
 </details>
 
-<details><summary><h3>0.3. Using VS Code with GitHub Enterprise account</h3></summary>
+### 0.3. [Setup Foundry resource](https://github.com/joetanx/mslab/blob/main/foundry.md)
+
+<details><summary><h3>0.4. Using VS Code with GitHub Enterprise account</h3></summary>
 
 Click on the GitHub Copilot icon and select `Use AI Features`:
 
@@ -57,43 +59,7 @@ Verify account signed in:
 
 </details>
 
-### 0.4. [Setup Foundry resource](https://github.com/joetanx/mslab/blob/main/foundry.md)
-
-## 1. Using SDL [data exploration tools](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-mcp-data-exploration-tool)  [with VS Code](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-mcp-use-tool-visual-studio-code)
-
-### 1.1. Adding data exploration tools to VS Code
-
-Click on top bar and select `Show and Run Commands >` (or press `Ctrl` + `Shift` + `P`):
-
-![](https://github.com/user-attachments/assets/cb8e2f24-c927-4ed5-8bc5-a69c014e2ed5)
-
-Search for `MCP` and select `MCP: Add Server...`:
-
-![](https://github.com/user-attachments/assets/a0e51f1c-d604-45ea-a4dd-4357e4669140)
-
-Select `HTTP (HTTP or Server-Sent Events)`:
-
-![](https://github.com/user-attachments/assets/e81900e1-3447-4cc5-a5ff-8e1792bc79db)
-
-Enter the data exploration MCP server URL https://sentinel.microsoft.com/mcp/data-exploration:
-
-![](https://github.com/user-attachments/assets/9c3822a3-0a0f-4724-9b48-a40861e8411e)
-
-Enter an ID for the MCP server:
-
-![](https://github.com/user-attachments/assets/d148e191-484d-4cbb-a527-d95ec101272b)
-
-Authenticate to connect the MCP server:
-
-![](https://github.com/user-attachments/assets/2f50df89-397d-45f0-8698-e01e9e45339a)
-
-![](https://github.com/user-attachments/assets/f4646f32-0b19-41a8-963b-a240cfe8b36b)
-
-Verify account signed in (note that the GHE.com account can be different from the MCP Server account):
-
-![](https://github.com/user-attachments/assets/2ed60927-3f68-4e25-88e7-8bab63743332)
-
-### 1.2. VS Code MCP server configuration file
+### 0.5. VS Code MCP server configuration file
 
 Config file location: `%USERPROFILE%\AppData\Roaming\Code\User\mcp.json`
 
@@ -139,7 +105,41 @@ Clicking `More...` brings up the option to `Disconnect Account` (so that the MCP
 >
 > ![](https://github.com/user-attachments/assets/19132ebf-1d14-45c5-9a4c-367cea024504)
 
-### 1.3. Using data exploration tools
+## 1. Using data exploration tools [with VS Code](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-mcp-use-tool-visual-studio-code)
+
+### 1.1. Adding data exploration tools to VS Code
+
+Click on top bar and select `Show and Run Commands >` (or press `Ctrl` + `Shift` + `P`):
+
+![](https://github.com/user-attachments/assets/cb8e2f24-c927-4ed5-8bc5-a69c014e2ed5)
+
+Search for `MCP` and select `MCP: Add Server...`:
+
+![](https://github.com/user-attachments/assets/a0e51f1c-d604-45ea-a4dd-4357e4669140)
+
+Select `HTTP (HTTP or Server-Sent Events)`:
+
+![](https://github.com/user-attachments/assets/e81900e1-3447-4cc5-a5ff-8e1792bc79db)
+
+Enter the data exploration MCP server URL https://sentinel.microsoft.com/mcp/data-exploration:
+
+![](https://github.com/user-attachments/assets/9c3822a3-0a0f-4724-9b48-a40861e8411e)
+
+Enter an ID for the MCP server:
+
+![](https://github.com/user-attachments/assets/d148e191-484d-4cbb-a527-d95ec101272b)
+
+Authenticate to connect the MCP server:
+
+![](https://github.com/user-attachments/assets/2f50df89-397d-45f0-8698-e01e9e45339a)
+
+![](https://github.com/user-attachments/assets/f4646f32-0b19-41a8-963b-a240cfe8b36b)
+
+Verify account signed in (notice that the GHE.com account can be different from the MCP Server account):
+
+![](https://github.com/user-attachments/assets/2ed60927-3f68-4e25-88e7-8bab63743332)
+
+### 1.2. Using data exploration tools
 
 The agent asks for permission to use the tool:
 
@@ -153,7 +153,7 @@ If the agent provides an input to the tool, the input can be reviewed with the p
 
 ![](https://github.com/user-attachments/assets/56160371-b976-4321-9d85-bdde5a05c8ab)
 
-### 1.4. VS Code agent instructions
+### 1.3. VS Code agent instructions
 
 VS Code supports multiple types of Markdown-based [instructions files](https://code.visualstudio.com/docs/copilot/customization/custom-instructions#_type-of-instructions-files)
 
@@ -189,7 +189,7 @@ The agent interaction corresponds to this incident:
 
 ![](https://github.com/user-attachments/assets/f8cb6e52-b5bf-442e-8901-1afcca5dc491)
 
-## 2. Using SDL [data exploration tools](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-mcp-data-exploration-tool)  [with Foundry](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-mcp-use-tool-azure-ai-foundry)
+## 2. Using data exploration tools [with Foundry](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-mcp-use-tool-azure-ai-foundry)
 
 ### 2.1. Create Foundry agent
 
@@ -258,9 +258,9 @@ The agent can request for multiple tool usages wherever applicable:
 
 ![](https://github.com/user-attachments/assets/26cf7e0e-c796-4c88-9be2-91e5af767c8d)
 
-## 3. Using SDL [data exploration tools](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-mcp-data-exploration-tool) with third-party agent framework
+## 3. Using data exploration tools with third-party agent framework
 
-While not officially supported, the [custom tool instructions](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-mcp-use-tool-azure-ai-foundry#add-a-custom-tool-collection) to create app registration works to work with third party agent frameworks like n8n
+While not officially documented, the [custom tool instructions](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-mcp-use-tool-azure-ai-foundry#add-a-custom-tool-collection) to create app registration works with third party agent frameworks like n8n
 
 ### 3.1. Create app registration for Sentinel MCP Server
 
@@ -364,3 +364,39 @@ You are a security operations assistant.
 ![](https://github.com/user-attachments/assets/41b92442-463d-409d-ad51-c712eb4530f6)
 
 ![](https://github.com/user-attachments/assets/b15f138b-3e7b-4497-8fd6-39276de1b1e8)
+
+## 4. Using triage tools
+
+### 4.1. Adding triage to VS Code
+
+Click on top bar and select `Show and Run Commands >` (or press `Ctrl` + `Shift` + `P`):
+
+![](https://github.com/user-attachments/assets/cb8e2f24-c927-4ed5-8bc5-a69c014e2ed5)
+
+Search for `MCP` and select `MCP: Add Server...`:
+
+![](https://github.com/user-attachments/assets/a0e51f1c-d604-45ea-a4dd-4357e4669140)
+
+Select `HTTP (HTTP or Server-Sent Events)`:
+
+![](https://github.com/user-attachments/assets/e81900e1-3447-4cc5-a5ff-8e1792bc79db)
+
+Enter the data exploration MCP server URL https://sentinel.microsoft.com/mcp/triage:
+
+![](https://github.com/user-attachments/assets/aa895675-d049-40e3-9ebf-b3663e7128a5)
+
+Enter an ID for the MCP server:
+
+![](https://github.com/user-attachments/assets/9cb1769f-f813-45de-90b9-1c6d0743260b)
+
+Authenticate to connect the MCP server:
+
+![](https://github.com/user-attachments/assets/41298466-d32a-4c41-9116-8e167218406c)
+
+![](https://github.com/user-attachments/assets/3386d2a8-9210-459b-8345-525f70b2e499)
+
+![](https://github.com/user-attachments/assets/6507cefc-331e-419a-9bd6-01d28418e258)
+
+Verify account signed in (notice that the GHE.com account can be different from the MCP Server accounts):
+
+![](https://github.com/user-attachments/assets/3265d5fb-d322-4538-9212-7919052c1e9b)
