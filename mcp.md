@@ -400,3 +400,43 @@ Authenticate to connect the MCP server:
 Verify account signed in (notice that the GHE.com account can be different from the MCP Server accounts):
 
 ![](https://github.com/user-attachments/assets/3265d5fb-d322-4538-9212-7919052c1e9b)
+
+### 4.2. Using triage tools
+
+#### Prompt: _list incidents from the past 3 days_
+
+![](https://github.com/user-attachments/assets/f4587c5d-8fb3-4ac4-acbe-0d76c01ad723)
+
+![](https://github.com/user-attachments/assets/84ea4776-4309-46fc-b4cf-0be4340882a3)
+
+#### Prompt: _get alerts for incident 1762_
+
+![](https://github.com/user-attachments/assets/b4a2f778-0f9e-4444-91bb-b912f336f759)
+
+![](https://github.com/user-attachments/assets/9be309f5-748d-4748-ba1c-c13e24715eeb)
+
+#### Prompt: _run KQL queries to search for windows logon failure and syslog password fail events_
+
+![](https://github.com/user-attachments/assets/d7bb608d-8a30-47fd-af63-f401ffec57ce)
+
+![](https://github.com/user-attachments/assets/38df367a-d95a-458b-b4cf-498f4b1ec3fa)
+
+![](https://github.com/user-attachments/assets/5326be72-a5bf-4d17-82e1-340d9e9a411f)
+
+#### Prompt: _review the machine information for `alpha-vm-winsvr` and `alpha-vm-langflow`_
+
+![](https://github.com/user-attachments/assets/a470c6cc-90ee-4272-bd9a-c262cfe0e3cc)
+
+![](https://github.com/user-attachments/assets/044a524c-c561-429b-9488-0e2c40bcb5c9)
+
+![](https://github.com/user-attachments/assets/9cd9c2d8-afb7-4bfa-a970-496661a359db)
+
+#### Prompt: _what are the malware or exploit alerts seen on these 2 machines?_
+
+![](https://github.com/user-attachments/assets/e1735007-d54e-4ee7-a638-4af4062752b8)
+
+![](https://github.com/user-attachments/assets/8bea9bf3-33cd-4ace-a8b6-e539ed0a884f)
+
+![](https://github.com/user-attachments/assets/7c0a163a-3212-4817-a254-073c5073234c)
+
+![](https://github.com/user-attachments/assets/dc3ec276-7278-4b8b-b9fe-c00a31222486)
