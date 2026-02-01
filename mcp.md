@@ -1,6 +1,13 @@
 ## 0. Preparations
 
-<details><summary><h3>0.1. Setup Sentinel Data Lake (SDL)</h3></summary>
+### 0.1. Permissions
+
+|Tool|Permissions|
+|---|---|
+|[Data exploration](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-mcp-data-exploration-tool)|Security Reader at Entra level|
+|[Triage](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-mcp-triage-tool)|Tools available corresponds to [Defender Unified RBAC permissions](https://learn.microsoft.com/en-us/defender-xdr/custom-permissions-details)|
+
+<details><summary><h3>0.2. Setup Sentinel Data Lake (SDL)</h3></summary>
 
 ![](https://github.com/user-attachments/assets/781430ac-9a0f-49e3-a992-2fbde10b92f8)
 
@@ -20,7 +27,7 @@ Data lake setup completed:
 
 </details>
 
-<details><summary><h3>0.2. Using VS Code with GitHub Enterprise account</h3></summary>
+<details><summary><h3>0.3. Using VS Code with GitHub Enterprise account</h3></summary>
 
 Click on the GitHub Copilot icon and select `Use AI Features`:
 
@@ -50,7 +57,7 @@ Verify account signed in:
 
 </details>
 
-### 0.3. [Setup Foundry resource](https://github.com/joetanx/mslab/blob/main/foundry.md)
+### 0.4. [Setup Foundry resource](https://github.com/joetanx/mslab/blob/main/foundry.md)
 
 ## 1. Using SDL [data exploration tools](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-mcp-data-exploration-tool)  [with VS Code](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-mcp-use-tool-visual-studio-code)
 
