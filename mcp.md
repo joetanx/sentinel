@@ -452,3 +452,19 @@ The below example prompts are performed with the follow tools enabled:
 ![](https://github.com/user-attachments/assets/7c0a163a-3212-4817-a254-073c5073234c)
 
 ![](https://github.com/user-attachments/assets/dc3ec276-7278-4b8b-b9fe-c00a31222486)
+
+Enabling more tools to delve down on file investigations:
+
+<img width="508" height="881" alt="image" src="https://github.com/user-attachments/assets/9c309412-46f3-4ffc-9b4d-643621fdb144" />
+
+#### Prompt: _find malware or exploit alerts seen on `alpha-vm-winsvr`_
+
+<img width="800" height="1584" alt="image" src="https://github.com/user-attachments/assets/9ed45b7e-70f5-4119-8c1a-dbea7d51d20f" />
+
+#### Prompt: _find details on the files seen in these alert_
+
+<img width="800" height="1531" alt="image" src="https://github.com/user-attachments/assets/1ddf7647-762c-45cd-869f-549359e767e5" />
+
+#### Prompt: _try using the `GetDefenderFile*` tools to see what else you can find out_
+
+<img width="800" height="2971" alt="image" src="https://github.com/user-attachments/assets/b5e98f73-b2ba-4b41-9618-49d00fa7ea9b" />
