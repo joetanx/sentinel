@@ -411,31 +411,39 @@ Verify account signed in (notice that the GHE.com account can be different from 
 >
 > The triage tool collections has 27 tools, the selection tools to enable can vastly impact the agent performance
 
-The below example prompts are performed with the follow tools enabled:
+#### 4.2.1. Incident investigation example
+
+Tools enabled:
 
 ![](https://github.com/user-attachments/assets/49c83549-dd66-4005-b735-a90bdb138a6c)
 
-#### Prompt: _list incidents from the past 3 days_
+##### Prompt: _list incidents from the past 3 days_
 
 ![](https://github.com/user-attachments/assets/f4587c5d-8fb3-4ac4-acbe-0d76c01ad723)
 
+Response:
+
 ![](https://github.com/user-attachments/assets/84ea4776-4309-46fc-b4cf-0be4340882a3)
 
-#### Prompt: _get alerts for incident 1762_
+##### Prompt: _get alerts for incident 1762_
 
 ![](https://github.com/user-attachments/assets/b4a2f778-0f9e-4444-91bb-b912f336f759)
 
+Response:
+
 ![](https://github.com/user-attachments/assets/9be309f5-748d-4748-ba1c-c13e24715eeb)
 
-#### Prompt: _run KQL queries to search for windows logon failure and syslog password fail events_
+##### Prompt: _run KQL queries to search for windows logon failure and syslog password fail events_
 
 ![](https://github.com/user-attachments/assets/d7bb608d-8a30-47fd-af63-f401ffec57ce)
 
 ![](https://github.com/user-attachments/assets/38df367a-d95a-458b-b4cf-498f4b1ec3fa)
 
+Response:
+
 ![](https://github.com/user-attachments/assets/5326be72-a5bf-4d17-82e1-340d9e9a411f)
 
-#### Prompt: _review the machine information for `alpha-vm-winsvr` and `alpha-vm-langflow`_
+##### Prompt: _review the machine information for `alpha-vm-winsvr` and `alpha-vm-langflow`_
 
 ![](https://github.com/user-attachments/assets/a470c6cc-90ee-4272-bd9a-c262cfe0e3cc)
 
@@ -443,7 +451,7 @@ The below example prompts are performed with the follow tools enabled:
 
 ![](https://github.com/user-attachments/assets/9cd9c2d8-afb7-4bfa-a970-496661a359db)
 
-#### Prompt: _what are the malware or exploit alerts seen on these 2 machines?_
+##### Prompt: _what are the malware or exploit alerts seen on these 2 machines?_
 
 ![](https://github.com/user-attachments/assets/e1735007-d54e-4ee7-a638-4af4062752b8)
 
@@ -451,20 +459,68 @@ The below example prompts are performed with the follow tools enabled:
 
 ![](https://github.com/user-attachments/assets/7c0a163a-3212-4817-a254-073c5073234c)
 
+Response:
+
 ![](https://github.com/user-attachments/assets/dc3ec276-7278-4b8b-b9fe-c00a31222486)
 
-Enabling more tools to delve down on file investigations:
+#### 4.2.2. File investigation example
 
-<img width="508" height="881" alt="image" src="https://github.com/user-attachments/assets/9c309412-46f3-4ffc-9b4d-643621fdb144" />
+Tools enabled:
 
-#### Prompt: _find malware or exploit alerts seen on `alpha-vm-winsvr`_
+![](https://github.com/user-attachments/assets/9c309412-46f3-4ffc-9b4d-643621fdb144)
 
-<img width="800" height="1584" alt="image" src="https://github.com/user-attachments/assets/9ed45b7e-70f5-4119-8c1a-dbea7d51d20f" />
+##### Prompt: _find malware or exploit alerts seen on `alpha-vm-winsvr`_
 
-#### Prompt: _find details on the files seen in these alert_
+![](https://github.com/user-attachments/assets/4ba100c7-32e3-4b9b-8922-3678325d432f)
 
-<img width="800" height="1531" alt="image" src="https://github.com/user-attachments/assets/1ddf7647-762c-45cd-869f-549359e767e5" />
+The agent attempted run KQL query to find alerts with the machine's name, but it had a syntax error in the KQL query:
 
-#### Prompt: _try using the `GetDefenderFile*` tools to see what else you can find out_
+![](https://github.com/user-attachments/assets/3d743316-3ba6-4458-90ca-ccd529c6dc85)
 
-<img width="800" height="2971" alt="image" src="https://github.com/user-attachments/assets/b5e98f73-b2ba-4b41-9618-49d00fa7ea9b" />
+It then corrected the KQL query and retrieved the desired results:
+
+![](https://github.com/user-attachments/assets/8396bbd8-cc05-4e0d-a89c-f7dc893594f1)
+
+Response:
+
+![](https://github.com/user-attachments/assets/2774e459-661e-40a4-ab14-0d094a0e382d)
+
+##### Prompt: _find details on the files seen in these alert_
+
+The agent reasoned that it can use `GetAlertByID` with the alert IDs from the previous query:
+
+![](https://github.com/user-attachments/assets/50981794-8538-4b51-be20-d7ad076e6c43)
+
+![](https://github.com/user-attachments/assets/baaad101-734e-4423-95aa-341e0a6962aa)
+
+![](https://github.com/user-attachments/assets/b4400ce2-f2c1-4552-998e-c8541d0cc8ea)
+
+Response:
+
+![](https://github.com/user-attachments/assets/7f17ce77-ddb6-4d3b-ba79-c846fe08a651)
+
+##### Prompt: _try using the `GetDefenderFile*` tools to see what else you can find out_
+
+The agent identified the `GetDefenderFile*` tools to use:
+
+![](https://github.com/user-attachments/assets/c31427af-65ef-44e8-8f6d-59e3bc890c9a)
+
+It attempted to use the SHA-256 file hash with the 4 tools:
+- `GetDefenderFileInfo`: ✅
+  ![](https://github.com/user-attachments/assets/8a727669-6a9d-4a51-80e0-4650528af1d8)
+- `GetDefenderFileAlerts`: ❌ - the tool requires SHA-1 file hash
+  ![](https://github.com/user-attachments/assets/bd389076-db4a-4c8e-8d94-4b2656243914)
+- `GetDefenderFileRelatedMachines`: ❌ - the tool requires SHA-1 file hash
+  ![](https://github.com/user-attachments/assets/8f66b769-8213-4ca9-81ab-f5fa9d99833a)
+- `GetDefenderFileStatistics`: ✅
+  ![](https://github.com/user-attachments/assets/12054765-61a9-474c-b15f-c637bd26fba8)
+
+It then retried the failed tools with SHA-256 file hashes:
+- `GetDefenderFileAlerts`: ✅
+  ![](https://github.com/user-attachments/assets/e0d7384a-0337-449f-8149-56b3ad2aaba1)
+ `GetDefenderFileRelatedMachines`: ✅
+  ![](https://github.com/user-attachments/assets/6fecbddb-7166-4e2c-8428-4c29d8b601d3)
+
+Response:
+
+![](https://github.com/user-attachments/assets/134ea1e0-9b1d-4725-9245-16aa02144f44)
