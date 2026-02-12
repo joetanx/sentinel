@@ -524,3 +524,46 @@ It then retried the failed tools with SHA-256 file hashes:
 Response:
 
 ![](https://github.com/user-attachments/assets/134ea1e0-9b1d-4725-9245-16aa02144f44)
+
+### 4.3. Using triage tools outside of VS Code (trial, work in progress)
+
+#### 4.3.1. Postman token test with VS Code first-party client ID
+
+Details of triage MCP authentication: https://sentinel.microsoft.com/mcp/triage/.well-known/oauth-protected-resource
+
+```json
+{
+  "resource": "https://sentinel.microsoft.com/mcp/triage",
+  "authorization_servers": [
+    "https://login.microsoftonline.com/common/v2.0"
+  ],
+  "bearer_methods_supported": [
+    "header"
+  ],
+  "scopes_supported": [
+    "https://mcp.securitycenter.microsoft.com/MCP.Read.All"
+  ]
+}
+```
+
+|Parameter|Value|
+|---|---|
+|Grant Type|`Authorization Code` or<br>`Authorization Code (With PKCE)`|
+|Callback URL|Redirect URL for browser-based VS Code:<br>`https://vscode.dev/redirect`|
+|Auth URL|Entra authorization common endpoint:<br>`https://login.microsoftonline.com/common/oauth2/v2.0/authorize`|
+|Access Token URL|Entra token common endpoint:<br>`https://login.microsoftonline.com/common/oauth2/v2.0/token`|
+|Client ID|VS Code first-party client ID:<br>`aebc6443-996d-45c2-90f0-388ff96faa56`|
+|Client Secret|_blank_|
+|Scope|`https://mcp.securitycenter.microsoft.com/MCP.Read.All`|
+
+> [!Note]
+>
+> _Client Authentication_ parameter must be `Send client credentials in body`
+>
+> Using `Send as Basic Auth header` results in this error:
+>
+> ```
+> Error: AADSTS900144: The request body must contain the following parameter: 'client_id'. Trace ID: ef65dc4c-f4bc-4dce-93cd-8f9322611300 Correlation ID: 726091b9-8e22-4a43-b918-8547ff160cf7 Timestamp: 2026-02-12 07:46:50Z
+> ```
+
+![](https://github.com/user-attachments/assets/dcd00ffe-0758-4004-9bcb-be6354625939)
