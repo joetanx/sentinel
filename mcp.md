@@ -316,8 +316,8 @@ Configure OAuth2 authentication in n8n:
 |---|---|
 |Use Dynamic Client Registration|No|
 |Grant Type|Authorization Code|
-|Authorization URL|https://login.microsoftonline.com/<tenant-id>/oauth2/v2.0/authorize|
-|Access Token URL|https://login.microsoftonline.com/<tenant-id>/oauth2/v2.0/token|
+|Authorization URL|`https://login.microsoftonline.com/<tenant-id>/oauth2/v2.0/authorize`|
+|Access Token URL|`https://login.microsoftonline.com/<tenant-id>/oauth2/v2.0/token`|
 |Client ID|The client ID of the app registration created|
 |Client Secret|The client secret created for the app registration|
 |Scope|`4500ebfb-89b6-4b14-a480-7f749797bfcd/.default`|
